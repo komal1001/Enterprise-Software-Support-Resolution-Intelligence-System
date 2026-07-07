@@ -1,0 +1,2017 @@
+[
+  {
+    "text": "# API Error Codes &#x26; Troubleshooting Handbook",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "a7e12722-e88c-4f23-a3e4-2278b925a3f2"
+  },
+  {
+    "text": "# Enterprise Resolution Intelligence System API v3.5",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "165f59a7-010b-4b82-a576-fde6f59c562c"
+  },
+  {
+    "text": "# Error Resolution Decision Flow",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "22a4d8ed-c4c4-4625-b57c-5d9c0e5a23d9"
+  },
+  {
+    "text": "# Error Received\n\n| Yes                | 4xx Error? | No       | 5xx Error?   | No       |\n| ------------------ | ---------- | -------- | ------------ | -------- |\n| Fix Request        | (Client)   | (Server) | Check Logs & | Escalate |\n| Retry with Backoff |            |          |              |          |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2bd9ac36-0d17-4b5d-8a78-756a2078909f"
+  },
+  {
+    "text": "# Error/Issue",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "257e23b2-d37b-442a-9d68-9b23ce62c008"
+  },
+  {
+    "text": "# 1. Authentication &#x26; Authorization Failures\n\n| Code | Error Type         | Cause                               | Solution                                 |\n| ---- | ------------------ | ----------------------------------- | ---------------------------------------- |\n| 401  | Missing Auth       | No API key or token provided        | Include X-API-Key header or Bearer token |\n| 401  | Invalid Key        | Malformed or expired API key        | Generate new API key from dashboard      |\n| 401  | Token Expired      | JWT or OAuth token expired          | Refresh token or re-authenticate         |\n| 403  | Insufficient Scope | API key lacks required permissions  | Request scope upgrade or use correct key |\n| 403  | IP Restricted      | Request from unauthorized IP        | Whitelist IP in API settings             |\n| 403  | Account Suspended  | Account payment or policy violation | Contact billing or compliance team       |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0b1e5701-a3ef-4d6a-8faf-00da13401223"
+  },
+  {
+    "text": "# Diagnostic Commands:",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f17e3c2c-a594-40d7-8d1d-86965a6c2541"
+  },
+  {
+    "text": "# Test API key validity\ncurl -I -H \"X-API-Key: your_key\" https://api.example.com/v3/auth/validate",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "65550dbd-1f1b-4324-878d-860291eb8bd0"
+  },
+  {
+    "text": "# 2. Rate Limiting &#x26; Throttling\n\n| Code | Scenario              | Response Headers             | Recovery Action                         |\n| ---- | --------------------- | ---------------------------- | --------------------------------------- |\n| 429  | Rate limit exceeded   | X-RateLimit-Remaining: 0     | Wait 60s, implement exponential backoff |\n| 429  | Burst limit hit       | X-Burst-Limit-Reset: 1678... | Reduce concurrent requests              |\n| 429  | Daily quota exhausted | X-Quota-Remaining: 0         | Upgrade plan or wait 24 hours           |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "c02ec65b-8f85-402c-aadd-5f2773128391"
+  },
+  {
+    "text": "# Retry Logic Example (Python):\n\nimport time",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "39291827-3ca9-48ce-825b-567cc716759e"
+  },
+  {
+    "text": "for attempt in range(3):\nresponse = requests.get(url, headers=headers)\nif response.status_code == 429:\nretry_after = int(response.headers.get('Retry-After', 60))\ntime.sleep(retry_after)\nelse: break",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "105240a7-d04d-4c44-9fc8-629f645ee6fc"
+  },
+  {
+    "text": "# 3. Input Validation &#x26; Request Formatting\n\n| Code | Issue                  | Example Error                   | Fix                             |\n| ---- | ---------------------- | ------------------------------- | ------------------------------- |\n| 400  | Invalid JSON           | Unexpected token at position 45 | Validate JSON syntax            |\n| 400  | Missing required field | Field 'email' is required       | Include all required fields     |\n| 422  | Type mismatch          | Expected integer, got string    | Check data types                |\n| 422  | Value out of range     | priority must be 1-5            | Use valid value ranges          |\n| 422  | Invalid format         | email format invalid            | Match expected format/regex     |\n| 413  | Payload too large      | Max size: 5MB                   | Reduce payload or use multipart |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "35da868b-1b3e-4f64-8de7-013a55f658d1"
+  },
+  {
+    "text": "# 4. Server-Side Errors (5xx)\n\n| Code | Error                 | Meaning                        | Action                                           |\n| ---- | --------------------- | ------------------------------ | ------------------------------------------------ |\n| 500  | Internal Server Error | Unhandled exception on server  | Retry once; if persists, report with request\\_id |\n| 502  | Bad Gateway           | Upstream service down          | Retry with exponential backoff (2, 4, 8s)        |\n| 503  | Service Unavailable   | Maintenance or overload        | Check status page, retry after 5min              |\n| 504  | Gateway Timeout       | Request exceeded timeout (30s) | Optimize query or increase client timeout        |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3e111d7f-16a8-4f67-b51b-f7ef07012b02"
+  },
+  {
+    "text": "# 5. Logging &#x26; Diagnostic Information",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "8298b0df-0254-454f-8644-27068b26c66b"
+  },
+  {
+    "text": "# 5.1 Essential Headers to Log\n\n- X-Request-ID: Unique identifier for tracing (e.g., req_abc123xyz)\n- X-Response-Time: Server processing time in milliseconds\n- X-RateLimit-*: Rate limit status headers\n- Retry-After: Seconds to wait before retrying",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "5ab4b302-909f-4a27-ae7f-448a09fac08f"
+  },
+  {
+    "text": "# 5.2 Error Response Structure\n\n{\n\"error\": {\n\"type\": \"validation_error\",\n\"message\": \"Request validation failed\",\n\"details\": [\n{ \"field\": \"priority\", \"error\": \"must be between 1 and 5\" }\n],\n\"request_id\": \"req_abc123\",\n\"timestamp\": \"2026-03-05T10:30:00Z\"\n}\n}",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0b6601a2-1256-4ff5-a292-4321926148f1"
+  },
+  {
+    "text": "# 5.3 What to Log for Debugging\n\n- Full request URL and method\n- Request headers (excluding sensitive auth tokens)\n- Request body (sanitize PII/credentials)\n- Response status code and headers\n- Response body (full error object)\n- Client timestamp and server timestamp",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "7ff122a8-cca3-497d-a0b3-bc3b6813602c"
+  },
+  {
+    "text": "# 6. Escalation Path\n\n| Error Category    | Self-Service Actions                                      | Escalate If...             | Contact                              |\n| ----------------- | --------------------------------------------------------- | -------------------------- | ------------------------------------ |\n| 4xx Client Errors | * Review docs\n* Fix request format\n* Check API key scopes | Error persists after fixes | Community forum or developer support |\n| Rate Limiting     | - Implement backoff\n- Optimize requests\n- Cache responses | Need quota increase        | sales\\@example.com for plan upgrade  |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f2e16a0e-6f52-4f2d-9695-5db05dcee3f4"
+  },
+  {
+    "text": "# 5xx Server Errors\n\n- Retry 2-3 times\n- Check status page with request_id\n- Wait 5 minutes",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "6ddfd5b3-2b3a-460b-a0fe-26e8c9376448"
+  },
+  {
+    "text": "# Auth Issues\n\n- Regenerate API key\n- Check IP whitelist\n- Verify account status\n- Can't generate new key or account suspended",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "45f50bf4-9bc3-400e-9b07-22e81fbdbec5"
+  },
+  {
+    "text": "# Critical Production\n\nN/A - immediate escalation\n\nRevenue-impacting outage",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "00451a6d-ae37-433b-ae7b-8b4a3a188b93"
+  },
+  {
+    "text": "# 7. Quick Troubleshooting Checklist\n\n| ✓ | Check          | Action                                     |\n| - | -------------- | ------------------------------------------ |\n| ■ | API Key Valid  | Test with /v3/auth/validate                |\n| ■ | Request Format | Validate JSON, check Content-Type header   |\n| ■ | Rate Limits    | Check X-RateLimit headers in last response |\n| ■ | Network Issues | Test with curl, check DNS resolution       |\n| ■ | Logs Captured  | Save request\\_id, full request/response    |\n| ■ | Status Page    | Visit <https://status.example.com>         |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "627c0ffd-e14a-49f4-852f-6d0dc94c9644"
+  },
+  {
+    "text": "# Support Resources\n\nAPI Status: https://status.example.com\n\nDocumentation: https://docs.example.com\n\nCommunity Forum: https://community.example.com\n\nSupport: support@example.com\n\nEmergency Hotline (Enterprise): +1-800-API-HELP",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_name": "API_Error_Codes_Troubleshooting_Handbook.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11454,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e6a58441-9a21-409a-9933-56a17d766a0b"
+  },
+  {
+    "text": "# API Integration &#x26; Authentication Guide",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "90ad4b06-ce2a-4435-a56c-c38c125b4ede"
+  },
+  {
+    "text": "# Enterprise Resolution Intelligence System API v3.5\n\nBase URL: https://api.example.com/v3 Auth: API Key / OAuth 2.0",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "38e8e630-6a92-4007-95fb-58475f7f7b35"
+  },
+  {
+    "text": "# 1. Authentication Methods\n\n| Method     | Use Case                                | Implementation                          |\n| ---------- | --------------------------------------- | --------------------------------------- |\n| API Key    | Server-to-server, backend services      | Header: X-API-Key: your\\_key            |\n| OAuth 2.0  | User-delegated access, web/mobile apps  | Authorization Code / Client Credentials |\n| JWT Bearer | Stateless authentication, microservices | Header: Authorization: Bearer \\<token>  |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "56d2d4f2-368c-448e-a4cd-eced0c14a165"
+  },
+  {
+    "text": "# 1.1 API Key Management\n\nAPI keys provide simple authentication for server-to-server integrations. Keys are scoped to specific permissions and can be rotated.",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "fe791399-1c2f-4a9a-8fe6-06a9d63ff5bb"
+  },
+  {
+    "text": "# Generate API Key:\n\nPOST /v3/auth/api-keys\n{ \"name\": \"Production Key\", \"scopes\": [\"read:tickets\", \"write:tickets\"] }",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3e41ab34-b90c-4cf6-a381-dd57871cd8bb"
+  },
+  {
+    "text": "# Use API Key in Requests:\n\ncurl -H \"X-API-Key: sk_live_abc123xyz\" https://api.example.com/v3/tickets\n\n- Keys prefixed with sk_live_ (production) or sk_test_ (sandbox)\n- Rotate keys every 90 days or immediately if compromised\n- Store keys securely in environment variables or secrets manager",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "920bc590-ac58-499f-9c7b-2c61506ad620"
+  },
+  {
+    "text": "# 1.2 OAuth 2.0 Authorization Flow",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "43b21bcc-8c25-4bba-b51c-aa404b4326fe"
+  },
+  {
+    "text": "# 1. Request Auth",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3c0911c9-c1d7-4a89-948c-816ae0ff711d"
+  },
+  {
+    "text": "# 4. API Response\n\nClient App                  Auth Server                  API Server",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "6ecd8085-3051-4804-828a-2ac81b6d6754"
+  },
+  {
+    "text": "# 2. Access Token",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3e75e6a5-811f-4188-b0c1-01d222431f46"
+  },
+  {
+    "text": "# 3. API Request + Token\n\nClient                  OAuth Server                  API Server",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "c19dcf27-54b6-4470-883c-9bb1c1fe8352"
+  },
+  {
+    "text": "# Step 1: Redirect User to Authorization URL\n\nGET https://auth.example.com/oauth/authorize?\nclient_id=your_client_id&#x26;response_type=code&#x26;redirect_uri=your_callback",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "a64391a0-e46d-4db7-b6fc-8e5686ad504e"
+  },
+  {
+    "text": "# Step 2: Exchange Authorization Code for Access Token\n\nPOST https://auth.example.com/oauth/token\n{ \"grant_type\": \"authorization_code\", \"code\": \"auth_code\", \"client_id\": \"...\", \"client_secret\": \"...\" }",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "c72a385b-dc15-4d69-b1d7-cc2be048ef23"
+  },
+  {
+    "text": "# Token Response:\n\n{ \"access_token\": \"eyJhbG...\", \"token_type\": \"Bearer\", \"expires_in\": 3600, \"refresh_token\": \"...\" }",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "d6e0f194-6fb4-4f35-90af-af79dd14f41d"
+  },
+  {
+    "text": "# 2. Rate Limiting Rules\n\n| Tier         | Requests/Min | Daily Quota | Burst Limit |\n| ------------ | ------------ | ----------- | ----------- |\n| Free         | 60           | 10,000      | 100/10s     |\n| Basic        | 300          | 100,000     | 500/10s     |\n| Professional | 1,200        | 500,000     | 2,000/10s   |\n| Enterprise   | Custom       | Unlimited   | Custom      |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "b11cc634-7c37-4e95-a4f6-2d4d144d619f"
+  },
+  {
+    "text": "# Rate Limit Headers:\n\n- X-RateLimit-Limit: Maximum requests allowed\n- X-RateLimit-Remaining: Requests remaining in current window\n- X-RateLimit-Reset: Unix timestamp when limit resets",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "9826e1f6-4ab1-43cf-b581-9f3bade74b78"
+  },
+  {
+    "text": "# Handling Rate Limit Exceeded (429):\n\nHTTP/1.1 429 Too Many Requests\nRetry-After: 60\n{ \"error\": \"rate_limit_exceeded\", \"message\": \"Rate limit exceeded. Retry after 60 seconds\" }",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2a12bb27-eff8-4f83-94b8-de8e16e5e8fd"
+  },
+  {
+    "text": "# 3. API Error Codes Reference\n\n| Code | Error               | Description                           | Resolution                        |\n| ---- | ------------------- | ------------------------------------- | --------------------------------- |\n| 400  | Bad Request         | Invalid request format or parameters  | Check request body and parameters |\n| 401  | Unauthorized        | Missing or invalid authentication     | Provide valid API key or token    |\n| 403  | Forbidden           | Insufficient permissions for resource | Check API key scopes              |\n| 404  | Not Found           | Resource does not exist               | Verify resource ID                |\n| 409  | Conflict            | Resource state conflict               | Retry with updated data           |\n| 422  | Validation Error    | Request validation failed             | Fix validation errors in response |\n| 429  | Rate Limited        | Too many requests                     | Implement exponential backoff     |\n| 500  | Internal Error      | Server-side error                     | Retry or contact support          |\n| 502  | Bad Gateway         | Upstream service unavailable          | Retry with exponential backoff    |\n| 503  | Service Unavailable | Temporary service outage              | Check status page, retry later    |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "6060348c-9883-4921-8628-1cde97ffe2ce"
+  },
+  {
+    "text": "# 3.1 Standard Error Response Format\n\n{\n\"error\": {\n\"code\": \"validation_error\",\n\"message\": \"Invalid email format\",\n\"details\": [\n{\n\"field\": \"email\",\n\"issue\": \"Must be valid email\"\n}\n],\n\"request_id\": \"req_abc123\"\n}\n}",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "61e2e8cf-ee22-4965-b961-7bf38e6293d4"
+  },
+  {
+    "text": "# 4. Integration Best Practices",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "43bb6001-e29d-4b91-8cf2-dd2d13149c0e"
+  },
+  {
+    "text": "# 4.1 Security\n\n- Never expose API keys in client-side code or version control\n- Use HTTPS for all API requests\n- Implement token refresh logic for OAuth flows\n- Rotate API keys periodically (recommended: every 90 days)",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "eec143c6-afcf-4eae-b22f-b83cccfa9c19"
+  },
+  {
+    "text": "# 4.2 Error Handling\n\n- Always check HTTP status codes before parsing response\n- Implement retry logic with exponential backoff for 5xx errors\n- Log request_id from error responses for support tickets\n- Handle rate limiting gracefully using Retry-After header",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2dde2941-dd72-484a-b264-429194b82c33"
+  },
+  {
+    "text": "# 4.3 Performance\n\n- Use pagination for list endpoints (max 100 items per page)\n- Implement request caching to reduce API calls\n- Use webhooks for real-time updates instead of polling\n- Batch requests when possible to optimize rate limit usage",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2d908d38-56dd-4142-83ed-cbfa7da3be38"
+  },
+  {
+    "text": "# 5. Quick Start Code Examples",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "7955eb2a-0096-4b73-a6a8-4707b98fac3b"
+  },
+  {
+    "text": "# Python Example:\n\nimport requests\nheaders = {\"X-API-Key\": \"sk_live_abc123\", \"Content-Type\": \"application/json\"}\nresponse = requests.get(\"https://api.example.com/v3/tickets\", headers=headers)\nif response.status_code == 200: print(response.json())",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "ff99b626-3da4-4c3b-acff-d5ca77aa9d1b"
+  },
+  {
+    "text": "# JavaScript Example:\n\nconst response = await fetch('https://api.example.com/v3/tickets', {\nheaders: { 'X-API-Key': 'sk_live_abc123', 'Content-Type': 'application/json' }\n});\nconst data = await response.json();",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0f949d8f-2b8b-45ba-9b82-d1271569c368"
+  },
+  {
+    "text": "# cURL Example:\n\ncurl -X GET https://api.example.com/v3/tickets \\\n-H \"X-API-Key: sk_live_abc123\" \\\n-H \"Content-Type: application/json\"",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3ac6ab1a-111f-43be-b525-9e4c30b896e4"
+  },
+  {
+    "text": "# 6. Key API Endpoints\n\n| Endpoint        | Method | Description              |\n| --------------- | ------ | ------------------------ |\n| /v3/tickets     | GET    | List all support tickets |\n| /v3/tickets     | POST   | Create new ticket        |\n| /v3/tickets/:id | GET    | Get ticket details       |\n| /v3/tickets/:id | PATCH  | Update ticket            |\n| /v3/users       | GET    | List users               |\n| /v3/analytics   | GET    | Get analytics data       |\n| /v3/webhooks    | POST   | Register webhook         |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0e2254b0-5cdd-43dc-bb01-94162b2ab877"
+  },
+  {
+    "text": "# API Support Resources\n\nDocumentation: https://docs.example.com/api   Developer Portal: https://developers.example.com\n\nAPI Status: https://status.example.com   Support: api-support@example.com",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\API_Integration_Authentication_Guide.pdf",
+      "file_name": "API_Integration_Authentication_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 10842,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e30d77d3-c33a-4768-9316-e933d68cb796"
+  },
+  {
+    "text": "ITIL Incident Management Summary",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "24292e67-27b5-4053-b219-950b75899594"
+  },
+  {
+    "text": "# ITIL 4 Framework for Enterprise Service Management",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "1d824e08-cba0-42d5-a05e-0a949f32540f"
+  },
+  {
+    "text": "# 1. Incident Management Overview\n\nIncident Management is the ITIL process responsible for managing the lifecycle of all incidents. The primary objective is to restore normal service operation as quickly as possible while minimizing adverse impact on business operations.",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "c90f446f-07b5-45fc-87d0-54c05ed3cded"
+  },
+  {
+    "text": "# Key Objectives:\n\n- Restore normal service operation quickly\n- Minimize business impact and disruption\n- Ensure incidents are resolved within agreed SLA timeframes\n- Maintain quality and availability of IT services\n- Improve user and customer satisfaction",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "1fbc7270-0ead-4d55-992b-61c3c933f7e3"
+  },
+  {
+    "text": "# 1.1 Incident Lifecycle Stages\n\n| 1. Detection & Recording | 2. Classification & Prioritization | 3. Diagnosis & Investigation | 4. Resolution & Recovery |\n| ------------------------ | ---------------------------------- | ---------------------------- | ------------------------ |\n| Yes                      | Major                              | 5. Incident Management       | Incident?                |\n| (Separate Process)       |                                    |                              |                          |\n\nKnowledge Management\n\nProblem Management\n\nChange Management\n\nService Request Fulfillment\n\nSupporting ITIL Processes",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "adb884c9-a974-46e0-9fb8-d37d41cdf32d"
+  },
+  {
+    "text": "# 2. Incident Lifecycle Stage Details\n\n| Stage                              | Activities                                                                                              | Key Outputs                                       | Tools/Methods                                                  |\n| ---------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------- |\n| 1. Detection & Recording           | * Identify incident source\n* Create incident record\n* Assign unique ticket ID\n* Capture initial details | Incident ticket with:                             | - Timestamp\n- Reporter\n- Symptoms                              |\n| 2. Classification & Prioritization | * Categorize by type\n* Assess urgency\n* Determine impact\n* Calculate priority                           | Priority (P0-P3) based on urgency × impact matrix | - ITSM tool\n- Priority matrix\n- Service catalog\n- SLA database |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "4adb7092-8e72-4c0b-8398-96101db0e739"
+  },
+  {
+    "text": "# 3. Diagnosis &#x26; Investigation\n\n- Gather information\n- Identify symptoms\n- Check knowledge base\n- Investigate root cause",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "5a250e14-93bd-471e-bd20-b218e9645f07"
+  },
+  {
+    "text": "# Diagnosis with:\n\n- Knowledge base\n- Probable cause\n- Resolution path\n- Diagnostic tools\n- Error logs\n- Known errors",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "d41bb71d-bbda-461a-be3e-46f65ea67562"
+  },
+  {
+    "text": "# 4. Resolution &#x26; Recovery\n\n- Implement fix\n- Test solution\n- Restore service\n- Confirm with user",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f12a624d-142b-4390-aee9-722365b81bf0"
+  },
+  {
+    "text": "# Service restored to normal operation with:\n\n- Change mgmt\n- Config mgmt\n- Workarounds\n- Escalation",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2557ad9a-585e-4d95-81a3-4e3e02235f63"
+  },
+  {
+    "text": "# 5. Incident Closure\n\n- Verify resolution\n- Update records\n- User satisfaction\n- Document lessons",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "27b46ec4-8e4e-427e-b716-d83055aa0ea2"
+  },
+  {
+    "text": "# Closed ticket with:\n\n- ITSM closure\n- Resolution\n- Time metrics\n- Feedback\n- KB updates\n- Trend analysis",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "29249b2b-d54c-4b41-a42f-89e0bb8227e7"
+  },
+  {
+    "text": "# 3. Incident Prioritization\n\nPriority is determined by assessing both the urgency (how quickly resolution is needed) and impact (extent of business disruption) of the incident.\n\n|         | Low    | Medium | High |\n| ------- | ------ | ------ | ---- |\n| Low     | P3     | P3     | P2   |\n| Urgency | P3     | P2     | P1   |\n|         | Medium | P2     | P1   |\n| High    | P2     | P1     | P0   |\n\nPriority:\n\n- P0: Critical\n- P1: High\n- P2: Medium\n- P3: Low\n\n| Level  | Impact Definition                                                                               | Urgency Definition                                                                  |\n| ------ | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |\n| High   | * Affects multiple users/services\n* Critical business function down\n* Revenue/compliance impact | - Immediate resolution required\n- Business operations stopped\n- SLA breach imminent |\n| Medium | * Affects single user/department\n* Important but not critical\n* Workaround available            | - Resolution needed today\n- Reduced productivity\n- Can wait few hours               |\n| Low    | * Minimal business impact\n* Cosmetic issues\n* Individual convenience                            | - Can be scheduled\n- No immediate pressure\n- Next business day OK                   |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "5b8a22e8-9a0d-4ebf-86e3-5787f1882c7b"
+  },
+  {
+    "text": "# 4. Major Incident Management\n\nA Major Incident is the highest category of impact requiring separate procedures and expedited resolution processes.\n\n| Criteria         | Threshold                               | Examples                                                  |\n| ---------------- | --------------------------------------- | --------------------------------------------------------- |\n| User Impact      | > 100 users OR > 25% of user base       | Email system down, network outage, authentication failure |\n| Business Impact  | Critical business function unavailable  | E-commerce site down, payment processing halted           |\n| Financial Impact | > $50,000/hour revenue loss             | Production system outage, order processing stopped        |\n| Duration         | Outage > 4 hours for critical service   | Prolonged degradation of essential services               |\n| Security         | Data breach or active security incident | Ransomware, data exfiltration, unauthorized access        |\n| Compliance       | Regulatory violation or SLA breach      | GDPR data exposure, contractual SLA failure               |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "4d6e1484-90a9-46ad-8f12-6300c0916484"
+  },
+  {
+    "text": "# 4.1 Major Incident Procedure\n\n- Immediate actions: Convene incident response team, establish war room/bridge\n- Communication: Executive notification, status page updates, stakeholder briefings\n- Coordination: Incident manager coordinates all technical teams",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "358c1a00-4b52-4184-a755-d2239cd642f7"
+  },
+  {
+    "text": "# 5. Root Cause Analysis (RCA) Requirements\n\nRCA is mandatory for all P0 and P1 incidents, and recommended for recurring P2 incidents. The goal is to identify the underlying cause and prevent recurrence.\n\n| Phase                        | Activities                                                                                   | Deliverables                                             | Timeline                      |\n| ---------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------- |\n| 1. Data Collection           | • Gather logs, metrics • Interview stakeholders • Document timeline • Collect evidence       | Complete incident timeline with all actions and events   | Within 24 hours of resolution |\n| 2. Root Cause Identification | • 5 Whys analysis • Fishbone diagram • Fault tree analysis • Identify contributing factors   | Root cause(s) and contributing factors identified        | Within 3 days                 |\n| 3. Corrective Actions        | • Define preventive measures • Assign owners • Set implementation dates • Risk assessment    | Action plan with: - Remediation - Prevention - Detection | Within 5 days                 |\n| 4. Documentation & Review    | • Write RCA report • Present to stakeholders • Update knowledge base • Share lessons learned | Published RCA report with action tracking                | Within 7 days                 |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "06f2f818-601f-43b3-8ab0-bb66c6f4ceae"
+  },
+  {
+    "text": "# 5.1 RCA Report Structure\n\n- Executive Summary: Impact, duration, business cost, resolution\n- Incident Timeline: Chronological sequence of events with timestamps\n- Root Cause: Primary cause and contributing factors\n- 5 Whys Analysis: Drill-down questioning to find root cause\n- Action Items: Short-term fixes and long-term preventive measures\n- Lessons Learned: What worked well, what needs improvement\n- Follow-up Plan: Action owner assignments with due dates",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "009a6398-bfc1-4a17-bc55-006da476e9cd"
+  },
+  {
+    "text": "# 5.2 Key Incident Metrics\n\n| Metric                | Definition                                         | Target                  |\n| --------------------- | -------------------------------------------------- | ----------------------- |\n| MTTR                  | Mean Time To Resolve (detection to resolution)     | P0: < 4hrs, P1: < 24hrs |\n| MTTA                  | Mean Time To Acknowledge (detection to assignment) | P0: < 15min, P1: < 1hr  |\n| First Call Resolution | % of incidents resolved on first contact           | > 70%                   |\n| Escalation Rate       | % of incidents escalated to L2/L3                  | < 25%                   |\n| Reopen Rate           | % of incidents reopened after closure              | < 5%                    |\n| SLA Compliance        | % of incidents meeting response/resolution SLAs    | > 95%                   |\n\nITIL Incident Management Resources\n\n- ITIL Foundation: https://www.axelos.com/certifications/itil-service-management\n- Incident Management Guide: https://docs.example.com/itil/incident-management\n- Training &#x26; Certification: servicedesk@example.com",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\ITIL_Incident_Management_Summary.pdf",
+      "file_name": "ITIL_Incident_Management_Summary.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12957,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f278b989-6818-4695-acd8-cd60e14b7c3a"
+  },
+  {
+    "text": "Performance &#x26; Scalability Guide\nEnterprise Resolution Intelligence System API v3.5",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2c04587e-8ebc-4caa-bebf-c0f5ffd0b448"
+  },
+  {
+    "text": "# 1. Latency Expectations &#x26; SLAs\n\n| Operation           | P50   | P95   | P99   | Notes                              |\n| ------------------- | ----- | ----- | ----- | ---------------------------------- |\n| GET /tickets (list) | 50ms  | 150ms | 300ms | Cacheable, pagination required     |\n| GET /tickets/:id    | 30ms  | 80ms  | 150ms | Single record, cache-friendly      |\n| POST /tickets       | 100ms | 250ms | 500ms | Writes to DB, invalidates cache    |\n| POST /analytics     | 500ms | 1.5s  | 3s    | Heavy computation, async preferred |\n| POST /search        | 200ms | 600ms | 1.2s  | Full-text search, index-dependent  |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e5228049-0481-4d2a-8780-c7a196935a45"
+  },
+  {
+    "text": "# Latency Optimization Tips:\n\n- Use pagination (max 100 items per page) to reduce response size\n- Implement field filtering with ?fields=id,status,priority to reduce payload\n- Leverage ETags for conditional requests (If-None-Match header)\n- Choose nearest region endpoint to minimize network latency",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "03cecba5-1d72-49f2-8c49-ebe8f2659cfd"
+  },
+  {
+    "text": "# 2. Throughput &#x26; Capacity Limits\n\n| Tier         | Req/Second | Concurrent Connections | Burst Capacity | Payload Limit |\n| ------------ | ---------- | ---------------------- | -------------- | ------------- |\n| Free         | 5          | 10                     | 20/10s         | 1 MB          |\n| Basic        | 50         | 100                    | 100/10s        | 5 MB          |\n| Professional | 200        | 500                    | 400/10s        | 10 MB         |\n| Enterprise   | 1,000+     | 5,000+                 | Custom         | 50 MB         |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "b8626b44-5bca-4723-93cf-1693fba7b1be"
+  },
+  {
+    "text": "# 3. Caching Strategy &#x26; Mechanisms\n\n|                      | 1. Request  | 2b. Cache Miss   |\n| -------------------- | ----------- | ---------------- |\n| Client               | Cache Layer | Database         |\n| 2a. Cache Hit (fast) | Redis/CDN   | 3. Fetch & Cache |\n\nLatency: ~10ms (cache) vs ~100ms (DB)\n\nCache Hit Ratio Target: >90%",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2fe3c90d-a14b-4a70-bbb2-731d915c9b8d"
+  },
+  {
+    "text": "# 3.1 Cache Control Headers\n\n| Header | Value | Use Case |\n| ------ | ----- | -------- |\n|        |       |          |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "5372c01b-051c-4b27-9786-d47450c12e0a"
+  },
+  {
+    "text": "# 3.2 Client-Side Caching Example\n\nimport requests_cache\nsession = requests_cache.CachedSession('api_cache', expire_after=300)\nresponse = session.get('https://api.example.com/v3/tickets')\n\n| Cache-Control | public, max-age=300 | Cache for 5 minutes (read-heavy data)     |\n| ------------- | ------------------- | ----------------------------------------- |\n| Cache-Control | private, max-age=60 | User-specific data, 1-minute cache        |\n| Cache-Control | no-cache            | Always revalidate with server (ETag)      |\n| ETag          | \"abc123xyz\"         | Resource version for conditional requests |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e9eefce1-3215-428d-b800-554632e8872d"
+  },
+  {
+    "text": "# 4. Scaling Best Practices",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "44017dde-6f5c-435b-8c0d-259fecad3160"
+  },
+  {
+    "text": "# Load Balancer\n\n| Server 1 | Server 2 | Server 3 | Server N |\n| -------- | -------- | -------- | -------- |\n\nHorizontal Scaling: Add more servers to handle load",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "082d9239-1085-41a8-a2c4-870768c80e51"
+  },
+  {
+    "text": "# 4.1 Horizontal vs Vertical Scaling\n\n| Aspect       | Horizontal Scaling         | Vertical Scaling                    |\n| ------------ | -------------------------- | ----------------------------------- |\n| Definition   | Add more servers/instances | Increase CPU/RAM of existing server |\n| Cost         | Linear cost increase       | Exponential cost at high tier       |\n| Availability | High (redundancy)          | Single point of failure             |\n| Complexity   | Load balancing required    | Simple architecture                 |\n| Limit        | Nearly unlimited           | Hardware ceiling                    |\n| Recommended  | ✓ Production systems       | Development/testing                 |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2283a329-a846-4b4e-8f79-85ef928c37a9"
+  },
+  {
+    "text": "# 4.2 Connection Pooling\n\nReuse persistent connections to reduce overhead:",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3a82d723-395d-4f1e-8a93-c5f9e2f97b81"
+  },
+  {
+    "text": "# Python example\nfrom requests.adapters import HTTPAdapter\nsession = requests.Session()\nadapter = HTTPAdapter(pool_connections=10, pool_maxsize=20, max_retries=3)\nsession.mount('https://', adapter)\n• pool_connections: Number of connection pools to cache\n• pool_maxsize: Max connections per pool\n• max_retries: Retry failed requests automatically",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "6881c025-a84b-4e55-b7b2-0c16620c5985"
+  },
+  {
+    "text": "# 4.3 Async/Batch Operations\n\n- Use /v3/batch endpoint to create multiple tickets in single request (up to 100)\n- Leverage webhooks for async notifications instead of polling\n- Implement request queuing for non-critical operations\n- Use streaming responses for large datasets (Transfer-Encoding: chunked)",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "9fbad6c2-89a3-4802-ab86-e05e47bda614"
+  },
+  {
+    "text": "# 5. Regional Deployment &#x26; Optimization\n\n| Region  | Endpoint                | Avg Latency | Features                  |\n| ------- | ----------------------- | ----------- | ------------------------- |\n| US East | us-east.api.example.com | 50-150ms    | Primary, full feature set |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "3718bff1-2a6e-4a38-aa1c-b18b56ac81bc"
+  },
+  {
+    "text": "# Regional Selection Strategy:\n\n- Auto-routing: Use global endpoint for automatic routing to nearest region\n- Manual selection: Pin to specific region for data residency requirements\n- Multi-region: Deploy in multiple regions for disaster recovery (Enterprise)\n- Latency test: Use /v3/ping endpoint to measure round-trip time",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "521a7f4f-fb07-4d3b-8ac0-30e2090cbb79"
+  },
+  {
+    "text": "# 6. Performance Monitoring Metrics\n\n| Metric                     | Threshold | Action                              |\n| -------------------------- | --------- | ----------------------------------- |\n| Response Time (P95)        | > 500ms   | Enable caching, optimize queries    |\n| Error Rate                 | > 1%      | Check logs, review recent changes   |\n| Cache Hit Ratio            | < 85%     | Increase TTL, review cache strategy |\n| Rate Limit Usage           | > 80%     | Implement backoff, upgrade tier     |\n| Connection Pool Exhaustion | Frequent  | Increase pool size, check leaks     |\n| Timeout Rate               | > 0.1%    | Optimize queries, increase timeout  |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "25c2529d-15cf-4a79-837b-e1768d307e86"
+  },
+  {
+    "text": "# 7. Quick Optimization Checklist\n\n| ✓ | Optimization                            | Impact                        |\n| - | --------------------------------------- | ----------------------------- |\n| ■ | Enable response compression (gzip)      | 50-70% bandwidth reduction    |\n| ■ | Implement client-side caching           | 80-90% reduction in API calls |\n| ■ | Use connection pooling                  | 30-40% latency improvement    |\n| ■ | Paginate large result sets              | 10x faster response times     |\n| ■ | Select nearest region endpoint          | 50-200ms latency reduction    |\n| ■ | Use batch endpoints for bulk operations | 90% reduction in requests     |\n| ■ | Implement conditional requests (ETags)  | Zero payload on 304 responses |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "53e33dd5-1a5f-46b8-9820-fc934e241c7b"
+  },
+  {
+    "text": "# Performance Support\n\nPerformance Dashboard: https://status.example.com/performance\n\nOptimization Guide: https://docs.example.com/optimization\n\nArchitecture Consulting (Enterprise): architecture@example.com",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Performance_Scalability_Guide.pdf",
+      "file_name": "Performance_Scalability_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12278,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e33801ec-a47e-4c8b-9412-bd34c291841c"
+  },
+  {
+    "text": "# Product Installation &#x26; Setup Guide",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2c948bb3-3cdf-46ea-92d8-181f3dcd7b17"
+  },
+  {
+    "text": "# Enterprise Resolution Intelligence System v3.5\n\nDocument Version: 3.5.1\n\nRelease Date: March 2026\n\nSupport Level: Enterprise\n\nLast Updated: 05-Mar-2026",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f99d4359-7826-4bb6-8f75-a34f363964f9"
+  },
+  {
+    "text": "# Overview\n\nThis guide provides comprehensive instructions for installing and configuring the Enterprise Resolution Intelligence System. The installation process covers environment setup, dependency management, configuration, and initial deployment validation.",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "5fdcc434-a952-44d8-ab04-bc70aef115c3"
+  },
+  {
+    "text": "# Installation Process Flow\n\n1. Prerequisites Check\n2. Install Dependencies\n3. Configure Database\n4. Deploy Application\n\n| Review Logs & Troubleshoot | No | Health Check | Yes | ✓ Installation Complete |\n| -------------------------- | -- | ------------ | --- | ----------------------- |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e77c8343-abac-45ab-a69e-6ac4b828a10b"
+  },
+  {
+    "text": "# 1. Environment Prerequisites",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "8b835321-bfd5-476e-ada2-21de941170e5"
+  },
+  {
+    "text": "# 1.1 System Requirements",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "53bd4597-2bf2-4219-83da-aa2716cd48a7"
+  },
+  {
+    "text": "# 1. System Requirements",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0e1a31a0-2b85-4c13-9fdf-97106d49bd76"
+  },
+  {
+    "text": "# 1.1 Hardware Requirements\n\n| Component | Minimum  | Recommended | Notes                |\n| --------- | -------- | ----------- | -------------------- |\n| CPU       | 4 cores  | 8+ cores    | x86\\_64 architecture |\n| RAM       | 8 GB     | 16 GB       | 32 GB for production |\n| Storage   | 50 GB    | 200 GB SSD  | Separate data volume |\n| Network   | 100 Mbps | 1 Gbps      | Low latency required |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "ef0863cc-a441-448b-ac4e-01b93199e616"
+  },
+  {
+    "text": "# 1.2 Software Dependencies\n\n| Software         | Version          | Purpose                         |\n| ---------------- | ---------------- | ------------------------------- |\n| Operating System | Ubuntu 22.04 LTS | Host operating system           |\n|                  | CentOS 8+        |                                 |\n|                  | RHEL 8+          |                                 |\n| Docker           | 20.10+           | Container runtime               |\n| Docker Compose   | 2.0+             | Multi-container orchestration   |\n| PostgreSQL       | 14.x or 15.x     | Primary database                |\n| Redis            | 7.0+             | Caching and session management  |\n| NGINX            | 1.22+            | Reverse proxy and load balancer |\n| Node.js          | 18.x LTS         | Runtime for web services        |\n| Python           | 3.10+            | Backend services and ML models  |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "90342b80-9847-48da-b8c3-e2cc70ceea71"
+  },
+  {
+    "text": "# 1.3 Network Requirements\n\n- Ports 80 (HTTP) and 443 (HTTPS) must be open for web access\n- Port 5432 (PostgreSQL) for database connections\n- Port 6379 (Redis) for cache connections\n- Port 8080 (Application) for backend API\n- Outbound internet access for license validation and updates",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "1d08ef28-946d-4ebe-b42f-df61866dfa56"
+  },
+  {
+    "text": "# 2. Deployment Steps",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0a68a84e-66f0-4cf4-8b04-b9f6f3d5ebe7"
+  },
+  {
+    "text": "# 2.1 Deployment Architecture\n\n| Load Balancer      | NGINX / HAProxy    |                           |              |\n| ------------------ | ------------------ | ------------------------- | ------------ |\n| Application Server | Application Server | Background Worker Service |              |\n| Node 1 Port: 8080  | Node 2 Port: 8080  | Async Tasks               |              |\n| Database           | Cache Layer        | Message Queue             | File Storage |\n| PostgreSQL/MySQL   | Redis/Memcached    | RabbitMQ/Kafka            | S3/NFS       |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e72d739d-c503-4905-a39b-e717821d3d50"
+  },
+  {
+    "text": "# 2.2 Step-by-Step Installation",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "7e62161f-7930-4297-97fa-537ef443a909"
+  },
+  {
+    "text": "# Step 1: System Preparation\n\nUpdate system packages and install prerequisites:\n\nsudo apt update &#x26;&#x26; sudo apt upgrade -y\nsudo apt install -y curl wget git build-essential",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0fd335bb-a27a-41e5-bceb-0d5b53d7ec8e"
+  },
+  {
+    "text": "# Step 2: Install Docker\n\ncurl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh get-docker.sh\nsudo usermod -aG docker $USER",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "a243ad2a-dddf-46a4-870f-4f581f252658"
+  },
+  {
+    "text": "# Step 3: Install Docker Compose\n\nsudo curl -L \"https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose\nsudo chmod +x /usr/local/bin/docker-compose",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "b490302b-f514-4a31-ac83-4971b7110ea3"
+  },
+  {
+    "text": "# Step 4: Download Application Package\n\nwget https://releases.example.com/eris-v3.5.tar.gz\ntar -xzf eris-v3.5.tar.gz\ncd eris-v3.5",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f04b11c3-bf1d-4fa2-abf0-1f219ab139f0"
+  },
+  {
+    "text": "# Step 5: Configure Environment Variables\n\ncp .env.example .env\nnano .env # Edit configuration",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "63b770ee-8073-41a5-9ef7-50df3fc2b7d7"
+  },
+  {
+    "text": "# Step 6: Initialize Database\n\n./scripts/init-database.sh\n./scripts/run-migrations.sh",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "9b642458-35d4-4321-9440-74fc9464d718"
+  },
+  {
+    "text": "# Step 7: Start Services\n\ndocker-compose up -d",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "62662de3-6082-4f2c-ab3f-bcc87d5fed42"
+  },
+  {
+    "text": "# Step 8: Verify Installation\n\ndocker-compose ps # Check all services are running\ncurl http://localhost:8080/health # Health check",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "179654f2-1aa0-4611-a018-5db3647d3a02"
+  },
+  {
+    "text": "# 3. Configuration Setup",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "ad04a1e7-7392-4d45-9a84-8c6bcf8228a1"
+  },
+  {
+    "text": "# 3.1 Core Configuration Parameters\n\n| Parameter       | Description            | Default    | Required |\n| --------------- | ---------------------- | ---------- | -------- |\n| DB\\_HOST        | Database hostname      | localhost  | Yes      |\n| DB\\_PORT        | Database port          | 5432       | Yes      |\n| DB\\_NAME        | Database name          | eris\\_prod | Yes      |\n| DB\\_USER        | Database username      | postgres   | Yes      |\n| DB\\_PASSWORD    | Database password      | —          | Yes      |\n| REDIS\\_HOST     | Redis hostname         | localhost  | Yes      |\n| REDIS\\_PORT     | Redis port             | 6379       | Yes      |\n| APP\\_PORT       | Application port       | 8080       | No       |\n| LOG\\_LEVEL      | Logging verbosity      | info       | No       |\n| SESSION\\_SECRET | Session encryption key | —          | Yes      |\n| LICENSE\\_KEY    | Product license key    | —          | Yes      |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "c624be7e-a8f5-4103-a344-34c3e32e9db1"
+  },
+  {
+    "text": "# 3.2 Security Configuration\n\n- Generate strong session secret: openssl rand -base64 32\n- Enable SSL/TLS for production deployments\n- Configure firewall rules to restrict database access\n- Set up authentication for Redis if exposed",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "7178c943-e154-49ca-9ad9-b171d093689f"
+  },
+  {
+    "text": "# 4. Common Setup Errors &#x26; Solutions\n\n| Error                     | Cause                                | Solution                                                 |\n| ------------------------- | ------------------------------------ | -------------------------------------------------------- |\n| Port already in use       | Another service using port 8080      | Stop conflicting service or change APP\\_PORT in .env     |\n| Database connection       | PostgreSQL not running or refused    | Check DB\\_\\* parameters and ensure PostgreSQL is running |\n| Permission denied         | Insufficient file system permissions | Run: sudo chown -R $USER:$USER /opt/eris                 |\n| Docker daemon not running | Docker service not started           | Run: sudo systemctl start docker                         |\n| Invalid license key       | Expired or malformed license         | Contact support for license renewal                      |\n| Out of memory             | Insufficient RAM allocation          | Increase system RAM or adjust Docker memory limits       |\n| Migration failed          | Database schema mismatch             | Restore database backup and re-run migrations            |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "09fae8fe-b2e7-4071-a364-03cc64cb6919"
+  },
+  {
+    "text": "# 5. Version Compatibility Matrix\n\n| ERIS Version | PostgreSQL | Redis | Node.js    | Python     |\n| ------------ | ---------- | ----- | ---------- | ---------- |\n| 3.5.x        | 14.x, 15.x | 7.0+  | 18.x       | 3.10, 3.11 |\n| 3.4.x        | 13.x, 14.x | 6.2+  | 16.x, 18.x | 3.9, 3.10  |\n| 3.3.x        | 12.x, 13.x | 6.0+  | 16.x       | 3.8, 3.9   |\n| 3.2.x        | 12.x       | 5.0+  | 14.x, 16.x | 3.8        |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "478e67f1-198e-433e-ad7f-f0c3aa8cf947"
+  },
+  {
+    "text": "# 5.1 Operating System Compatibility\n\n| Operating System         | Versions             | Support Status             |\n| ------------------------ | -------------------- | -------------------------- |\n| Ubuntu                   | 20.04 LTS, 22.04 LTS | ✓ Fully Supported          |\n| CentOS                   | 8.x, 9.x             | ✓ Fully Supported          |\n| Red Hat Enterprise Linux | 8.x, 9.x             | ✓ Fully Supported          |\n| Debian                   | 11, 12               | ✓ Supported                |\n| Amazon Linux             | 2023                 | ■ Community Support        |\n| Windows Server           | 2019, 2022           | ■ Limited (Docker Desktop) |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0463851b-d9f8-4521-a1ad-ab0d7fdf9b15"
+  },
+  {
+    "text": "# 6. Post-Installation Verification",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "9f58c19a-1455-4ebd-9bd0-b25d6d3174d1"
+  },
+  {
+    "text": "# 6.1 Health Check Commands",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "c4e542a1-436f-47cf-a1d7-d7c4bc845aee"
+  },
+  {
+    "text": "# Check all services status\ndocker-compose ps",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "9644f759-9199-4147-9d0e-2d9a59e78ade"
+  },
+  {
+    "text": "# Verify API health\ncurl http://localhost:8080/api/v1/health",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "107713a7-c6b1-4f60-bbf8-b4cf7d1b362e"
+  },
+  {
+    "text": "# Check database connectivity\ndocker exec eris-db psql -U postgres -c 'SELECT version();'",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "777af67c-cc81-4d3b-b296-2f81fc5ebbdf"
+  },
+  {
+    "text": "# View application logs\ndocker-compose logs -f app",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "4eb9fe2a-d4a5-4742-b4ee-3de49a17ec1a"
+  },
+  {
+    "text": "# 6.2 Access Web Interface\n\nOnce installation is complete, access the web interface at:\n\n- HTTP: http://&#x3C;server-ip>:8080\n- HTTPS: https://&#x3C;server-ip> (if SSL configured)\n\nDefault administrator credentials:\n\n- Username: admin\n- Password: changeme (must change on first login)",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "59fa7b16-2454-4c7a-bf36-fea0d0a8e728"
+  },
+  {
+    "text": "# Support Contact\n\nTechnical Support: support@example.com\n\nDocumentation: https://docs.example.com\n\nEnterprise Support: +1-800-SUPPORT",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Product_Installation_Setup_Guide.pdf",
+      "file_name": "Product_Installation_Setup_Guide.pdf",
+      "file_type": "application/pdf",
+      "file_size": 15173,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "74cd1b8d-ad29-40fb-9d4c-f14196dfe2e4"
+  },
+  {
+    "text": "Security &#x26; Vulnerability Response Policy\nEnterprise Resolution Intelligence System\n\nEffective Date: January 1, 2026\n\nVersion: 2.1\n\nOwner: Chief Information Security Officer\n\nReview Cycle: Quarterly",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "5449aa35-3987-4683-9b6b-b534a6f58d9c"
+  },
+  {
+    "text": "# 1. Incident Severity Classification\n\n| Severity      | Definition                                          | Examples                                                                   | Response Time |\n| ------------- | --------------------------------------------------- | -------------------------------------------------------------------------- | ------------- |\n| Critical (P0) | Active exploitation, data breach, widespread impact | • Active data exfiltration • RCE vulnerability • Auth bypass in production | < 15 min      |\n| High (P1)     | High likelihood of exploitation, significant risk   | • SQL injection discovered • Privilege escalation • PII exposure           | < 1 hour      |\n| Medium (P2)   | Moderate risk, requires mitigation                  | • XSS vulnerabilities • Missing rate limits • Weak encryption              | < 24 hours    |\n| Low (P3)      | Minimal risk, hardening opportunity                 | • Info disclosure • Non-sensitive config • Security headers                | < 7 days      |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "20524c86-a501-4b5f-b950-a117f60d7e67"
+  },
+  {
+    "text": "# 1.1 Incident Response Timeline\n\n| Step            | Time         |\n| --------------- | ------------ |\n| 1. Detection    | < 15 min     |\n| 2. Assessment   | < 1 hour     |\n| 3. Containment  | < 4 hours    |\n| 4. Remediation  | 24-72 hours  |\n| 5. Notification | Per severity |\n| 6. Recovery     | Varies       |\n| 7. Post-Mortem  | 5 days       |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f2405594-3331-403d-8e04-ef38819d41fc"
+  },
+  {
+    "text": "# 2. Security Patch &#x26; Update Timelines\n\n| Severity | Patch Development | Testing | Deployment | Total SLA |\n| -------- | ----------------- | ------- | ---------- | --------- |\n|          |                   |         |            |           |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "162d871b-f9dd-4007-aa60-b17b4f3becdb"
+  },
+  {
+    "text": "# Patch Deployment Process\n\n| Severity         | Critical  | High       | Medium   | Low       |\n| ---------------- | --------- | ---------- | -------- | --------- |\n| Response Time    | < 4 hours | < 24 hours | < 5 days | < 21 days |\n| Initial Response | < 2 hours | < 8 hours  | < 2 days | < 5 days  |\n| Resolution Time  | < 2 hours | < 4 hours  | < 1 day  | < 4 days  |\n| Final Resolution | < 8 hours | < 36 hours | < 7 days | < 30 days |\n\n- Emergency patches: Deployed during business hours with minimal notice\n- Scheduled patches: Deployed during maintenance windows (Sundays 2-6 AM UTC)\n- Communication: 24-hour advance notice for High/Medium patches via status page\n- Rollback plan: Automated rollback within 30 minutes if issues detected",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0fd53a3c-bd79-4c82-a8d9-cf9344e9c539"
+  },
+  {
+    "text": "# 3. Responsible Disclosure Program",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "56eb2c7b-be43-4a69-a2f3-64ff096db43b"
+  },
+  {
+    "text": "# 3.1 Reporting Security Vulnerabilities\n\nWe welcome responsible disclosure of security vulnerabilities:\n\n- Email: security@example.com (PGP key available)\n- Bug Bounty: https://bugcrowd.com/example (rewards: $100-$10,000)\n- Response time: Initial acknowledgment within 24 hours\n- Updates: Progress updates every 5 business days",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "f98c8dd5-a86c-4c15-b38c-c2748b56b593"
+  },
+  {
+    "text": "# 3.2 Disclosure Guidelines\n\n| ✓ Encouraged                  | ✗ Prohibited                   |\n| ----------------------------- | ------------------------------ |\n| • Proof-of-concept code       | • Public disclosure before fix |\n| • Detailed reproduction steps | • Testing on production data   |\n| • Impact assessment           | • Social engineering attacks   |\n| • Suggested mitigations       | • DoS/DDoS attacks             |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "2e49e182-305b-46ad-ad74-5ec6d9dceabd"
+  },
+  {
+    "text": "# 3.3 Coordinated Disclosure Timeline\n\n- Day 0: Vulnerability reported\n- Day 1: Acknowledgment and triage\n- Day 1-30: Investigation, patch development, testing\n- Day 30-45: Patch deployment to production\n- Day 45-90: Public disclosure with researcher credit (if agreed)",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "54d3f63e-52d0-47af-8812-29654f54e379"
+  },
+  {
+    "text": "# 4. Data Breach Response Protocol\n\n| Phase        | Actions                                                                                   | Timeline       | Responsible Party      |\n| ------------ | ----------------------------------------------------------------------------------------- | -------------- | ---------------------- |\n| Detection    | • Identify breach scope • Preserve evidence • Document timeline                           | Immediate      | Security Team          |\n| Containment  | • Isolate affected systems • Revoke compromised credentials • Block attack vectors        | < 1 hour       | Security + DevOps      |\n| Assessment   | • Determine data exposure • Identify affected users • Assess legal obligations            | < 4 hours      | Security + Legal       |\n| Notification | • Notify regulators (GDPR: 72hrs) • Inform affected users • Public disclosure if required | Per regulation | Legal + Comms          |\n| Remediation  | • Apply security fixes • Reset credentials • Enhanced monitoring                          | < 7 days       | Security + Engineering |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "401459bc-fd0c-4d17-a916-42501abcd417"
+  },
+  {
+    "text": "# Regulatory Notification Requirements:\n\n- GDPR: 72 hours to supervisory authority, without undue delay to data subjects\n- CCPA: Without unreasonable delay to California residents\n- State laws: Varies by jurisdiction (typically 30-90 days)\n- Credit monitoring: Offer 12-24 months for SSN/financial data breaches",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "73c596d1-a936-452e-b457-c1898d7aad34"
+  },
+  {
+    "text": "# 5. Escalation Hierarchy &#x26; Communication\n\n| Critical   | Level 3: CISO/Executive | Executive Briefing         | Major    |\n| ---------- | ----------------------- | -------------------------- | -------- |\n| High       | Level 2: Security Lead  | Escalation (4-24 hrs)      | Critical |\n| Low/Medium | Level 1: Security Team  | Initial Response (0-4 hrs) |          |\n\n| Role              | Responsibilities                           | Contact                                         |\n| ----------------- | ------------------------------------------ | ----------------------------------------------- |\n| Security Team     | 24/7 monitoring, initial response, triage  | security\\@example.com +1-800-SEC-OPS            |\n| Security Lead     | Incident coordination, vendor management   | security-lead\\@example.com PagerDuty escalation |\n| CISO              | Executive decisions, regulatory liaison    | ciso\\@example.com Direct: +1-555-CISO           |\n| Legal Counsel     | Regulatory compliance, disclosure guidance | legal\\@example.com                              |\n| PR/Communications | External communications, media response    | pr\\@example.com                                 |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "b2c8a57a-5b9c-4cc3-acdf-84bd9c4dc0a2"
+  },
+  {
+    "text": "# 6. Post-Incident Review Requirements\n\nWithin 5 business days of incident closure, conduct post-mortem including:\n\n- Timeline reconstruction: Complete incident timeline with all actions taken\n- Root cause analysis: Technical and procedural factors that enabled incident\n- Impact assessment: Systems affected, data exposed, downtime incurred\n- Response effectiveness: What worked well, what needs improvement\n- Action items: Preventive measures with owners and deadlines\n- Documentation: Store in secure incident database for trend analysis",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0125e6cb-6869-497b-bbae-f59f72076ff1"
+  },
+  {
+    "text": "# Security Contact Information\n\nSecurity Operations: security@example.com | Emergency Hotline: +1-800-SEC-OPS\n\nBug Bounty: https://bugcrowd.com/example | Security Advisories: https://security.example.com\n\nPGP Key: https://example.com/pgp-key.asc",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\Security_Vulnerability_Response_Policy.pdf",
+      "file_name": "Security_Vulnerability_Response_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 11871,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "fc55104a-f319-4f91-a9b1-a2a7e0322045"
+  },
+  {
+    "text": "# SLA &#x26; Support Operation Policy",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "7aa007fb-cc5f-4ef6-ab3b-63f21d43a1bf"
+  },
+  {
+    "text": "# Enterprise Resolution Intelligence System",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "e8dfd01a-f9d6-4294-8f16-c5fc1af0279e"
+  },
+  {
+    "text": "# 1. Support Tier Overview\n\n| Feature       | Basic                   | Enhanced                    | Priority           | Enterprise              |\n| ------------- | ----------------------- | --------------------------- | ------------------ | ----------------------- |\n| Response Time | < 24 hours              | < 4 hours                   | < 1 hour           | < 15 minutes            |\n| Support Hours | M-F, 9am-5pm Local time | M-F, 6am-8pm Extended hours | 24/5 Business week | 24/7/365 Always-on      |\n| Channels      | Email, Portal           | Email, Portal, Chat         | All + Phone        | All + Dedicated Hotline |\n| Escalation    | Standard queue          | Priority queue              | Direct to L2       | Named TAM               |\n| SLA Credits   | N/A                     | 5% per breach               | 10% per breach     | 15% per breach          |\n| Monthly Price | Included                | $500/month                  | $2,000/month       | Custom pricing          |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "20d8b28d-bad6-42ee-8ecd-5fdd3cacc3bf"
+  },
+  {
+    "text": "# 2. Response Time Commitments by Severity\n\n| Severity      | Description                             | Basic    | Enhanced | Priority | Enterprise |\n| ------------- | --------------------------------------- | -------- | -------- | -------- | ---------- |\n| Critical (P0) | System down, data loss, security breach | 4 hours  | 1 hour   | 30 min   | 15 min     |\n| High (P1)     | Major functionality impaired            | 8 hours  | 4 hours  | 1 hour   | 30 min     |\n| Medium (P2)   | Partial functionality issue             | 24 hours | 8 hours  | 4 hours  | 2 hours    |\n| Low (P3)      | Minor issue or question                 | 48 hours | 24 hours | 8 hours  | 4 hours    |\n\nNote: Response time is measured from ticket creation to first meaningful response from support engineer.",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "b5464f47-0f4e-45bb-b5b1-b1ad69a0f7ce"
+  },
+  {
+    "text": "# 2.1 Resolution Time Targets\n\n| Severity      | Target Resolution Time | Status Updates   |\n| ------------- | ---------------------- | ---------------- |\n| Critical (P0) | < 4 hours              | Every 30 minutes |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "56b4ec32-4f7c-4512-97f9-501aa5df342b"
+  },
+  {
+    "text": "| Priority    | Response Time      | Update Frequency |\n| ----------- | ------------------ | ---------------- |\n| High (P1)   | < 24 hours         | Every 2 hours    |\n| Medium (P2) | < 5 business days  | Daily            |\n| Low (P3)    | < 10 business days | Every 2-3 days   |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "05f3e647-2978-4055-8bdd-822e62fe71ee"
+  },
+  {
+    "text": "# 3. Incident Classification Model\n\n| Severity      | Business Impact                                                         | User Impact                     | Workaround                  |\n| ------------- | ----------------------------------------------------------------------- | ------------------------------- | --------------------------- |\n| Critical (P0) | • Production system down • Revenue impact • Security breach • Data loss | > 50% users unable to work      | None available              |\n| High (P1)     | • Major feature broken • Performance degraded • Integration failure     | 20-50% users severely impacted  | Difficult or time-consuming |\n| Medium (P2)   | • Non-critical feature issue • Minor performance impact • Cosmetic bugs | < 20% users moderately affected | Available                   |\n| Low (P3)      | • Feature request • Documentation • General question                    | Minimal or no impact            | Not applicable              |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "dfed882d-dc21-4009-93fb-22d15b295b84"
+  },
+  {
+    "text": "# 3.1 Incident Lifecycle\n\nSLA Clock Running\n\n| 1   | 2            | 3           | 4       | 5        |\n| --- | ------------ | ----------- | ------- | -------- |\n| New | Acknowledged | In Progress | Pending | Resolved |\n\n| Stage           | Description                              | Owner            |\n| --------------- | ---------------------------------------- | ---------------- |\n| 1. New          | Ticket created, awaiting triage          | Customer         |\n| 2. Acknowledged | Received and prioritized by support      | Support Team     |\n| 3. In Progress  | Actively investigating or resolving      | Support Engineer |\n| 4. Pending      | Awaiting customer info or action         | Customer         |\n| 5. Resolved     | Solution provided, awaiting confirmation | Support Team     |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "d8a6c252-b5f5-4b7f-916c-ca3a8fe7895b"
+  },
+  {
+    "text": "# 4. Escalation Triggers &#x26; Procedures\n\n| Trigger          | Condition                                   | Action                             |\n| ---------------- | ------------------------------------------- | ---------------------------------- |\n| Time-based       | SLA breach imminent (80% elapsed)           | Auto-escalate to next tier         |\n| Severity upgrade | Issue becomes more severe during resolution | Reassign to appropriate queue      |\n| Customer request | Customer explicitly requests escalation     | Manager review within 1 hour       |\n| Complex issue    | Requires specialized expertise              | Engage subject matter expert (SME) |\n| No progress      | No meaningful update for 50% of SLA         | Supervisor intervention required   |\n| VIP customer     | Enterprise tier or strategic account        | Immediate TAM notification         |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "fb0e9945-0de6-4e0c-91c9-c78fe27ee3f0"
+  },
+  {
+    "text": "# 4.1 Escalation Path\n\n- Level 1 (L1): Front-line support engineers (initial triage and common issues)\n- Level 2 (L2): Senior engineers and specialists (complex troubleshooting)\n- Level 3 (L3): Engineering team (product bugs, code fixes)\n- Management: Support managers (process issues, SLA breaches)\n- Executive: VP of Support or CTO (critical business impact)",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "a226b009-a400-4b2a-8768-20094a546b02"
+  },
+  {
+    "text": "# 5. Resolution Ownership &#x26; Accountability",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "bac9f141-a523-416e-994f-a41a037395dd"
+  },
+  {
+    "text": "# 5.1 Primary Ownership\n\n- Support engineer assigned to ticket maintains ownership until resolution or escalation\n- Owner responsible for: investigation, updates, coordination, and final resolution\n- Handoffs require explicit acceptance from receiving engineer\n- Ownership tracked in ticket system with audit trail",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "491346c9-ef7e-4161-b313-4c82111e3617"
+  },
+  {
+    "text": "# 5.2 Escalation Ownership\n\n- When escalated, senior engineer assumes primary ownership\n- Original engineer remains as secondary contact for context\n- Customer always has single point of contact (SPOC)",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "44aa7506-b062-4e85-848a-4b9637c0ebbc"
+  },
+  {
+    "text": "# 5.3 Resolution Criteria\n\n| Resolution Type  | Criteria                                     | Closure Process                              |\n| ---------------- | -------------------------------------------- | -------------------------------------------- |\n| Permanent Fix    | Root cause addressed, verified in production | Close after 48-hour monitoring period        |\n| Workaround       | Temporary solution, permanent fix planned    | Create follow-up ticket for permanent fix    |\n| Configuration    | Settings adjusted, system functioning        | Document changes, close ticket               |\n| Cannot Reproduce | Unable to replicate issue after 3 attempts   | Document steps, close with reopen option     |\n| By Design        | Behavior is intentional, not a bug           | Explain design rationale, offer alternatives |",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "ce216333-f5fe-4a1a-a84a-793001e5888c"
+  },
+  {
+    "text": "# 6. SLA Credits &#x26; Service Guarantees",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "949451ba-c5bd-4337-bcba-415965dac619"
+  },
+  {
+    "text": "# 6.1 SLA Credit Calculation\n\n- Credits applied automatically when SLA breached:",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "284ba79f-29ad-43ff-bd18-7902dfdeab09"
+  },
+  {
+    "text": "# 6.2 Exclusions from SLA\n\n- SLA does not apply during:",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "0eb52316-7647-47c4-bdfe-4e0bda809642"
+  },
+  {
+    "text": "# Support Contact Information\n\nEmail: support@example.com\n\nPortal: https://support.example.com\n\nPhone (Enhanced+): +1-800-SUPPORT\n\nEmergency (Enterprise): +1-800-PRIORITY\n\nChat: Available in-app during business hours",
+    "metadata": {
+      "file_path": "C:\\Users\\shubh\\python_projects\\course_5\\project-description-master\\Project-2-Enterprise Software Support & Resolution Intelligence System\\Documents\\SLA_Support_Operation_Policy.pdf",
+      "file_name": "SLA_Support_Operation_Policy.pdf",
+      "file_type": "application/pdf",
+      "file_size": 12263,
+      "creation_date": "2026-06-12",
+      "last_modified_date": "2026-06-12",
+      "header_path": "/"
+    },
+    "id_": "8e24655f-5dc4-4143-8f16-8c25e2bff109"
+  }
+]

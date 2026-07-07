@@ -1,0 +1,47 @@
+# Core
+langchain>=0.2.0
+langchain-openai>=0.1.0
+langchain-community>=0.2.0
+langgraph>=0.1.0
+openai>=1.30.0
+pydantic>=2.0.0
+
+# API
+fastapi>=0.111.0
+uvicorn>=0.30.0
+python-multipart>=0.0.9
+slowapi>=0.1.9
+
+# Database
+psycopg2-binary>=2.9.9
+pgvector>=0.2.5
+sqlglot>=23.0.0
+
+# RAG — LlamaIndex with PostgreSQL vector store
+llama-index-core>=0.10.0
+llama-index-vector-stores-postgres>=0.1.0
+llama-index-embeddings-azure-openai>=0.1.0
+rank-bm25>=0.2.2
+llama-parse>=0.4.0
+
+# Observability
+langfuse>=2.0.0
+opentelemetry-instrumentation-fastapi>=0.64b0
+opentelemetry-instrumentation-psycopg2>=0.64b0
+
+# Frontend — React app (see frontend/ directory)
+# React dependencies are managed via npm, not pip.
+# FastAPI serves the backend API; React calls it via fetch/axios.
+
+# Async patching — required for LlamaIndex asyncpg in threaded workers (ADR-013)
+nest_asyncio>=1.6.0
+
+# Streaming — SSE for real-time ticket progress (Sprint 9)
+sse-starlette>=3.4.0
+
+# Auth0 — JWT verification for RBAC (Sprint 9, SLO #12)
+python-jose[cryptography]>=3.3.0
+httpx>=0.27.0
+
+# Utilities
+python-dotenv>=1.0.0
