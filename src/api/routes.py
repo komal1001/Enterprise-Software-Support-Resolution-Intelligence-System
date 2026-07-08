@@ -539,6 +539,12 @@ async def submit_ticket_stream(
             # which prevents the self-grading inflation seen with the LLM judge.
             # Scores pushed to Langfuse trace for SLO #2, #4, #9 tracking.
             try:
+                # Skip RAGAS for multi-turn follow-ups: response draws on conversation
+                # history not present in the current retrieval context, so faithfulness
+                # and context_precision would score 0% even for correct answers.
+                if body.conversation_history:
+                    raise StopIteration  # jump to except block → no scores event sent
+
                 from src.evaluation.ragas_eval import score_ragas
                 rag_chunks   = (rag_result.get("chunks") or [])[:5]
                 contexts     = [str(c.get("text", ""))[:1200] for c in rag_chunks if c.get("text")]
@@ -588,7 +594,7 @@ async def submit_ticket_stream(
                         "source":            "ragas",
                     }),
                 }
-            except Exception:
+            except (Exception, StopIteration):
                 pass
 
         finally:
