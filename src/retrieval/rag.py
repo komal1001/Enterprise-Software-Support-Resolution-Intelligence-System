@@ -87,10 +87,13 @@ def _build_vector_store() -> PGVectorStore:
     _db   = os.environ["POSTGRES_DB"]
     _user = os.environ["POSTGRES_USER"]
     _pwd  = os.environ.get("POSTGRES_PASSWORD", "")
-    _ssl  = "?sslmode=require" if _host not in ("localhost", "127.0.0.1") else ""
+    _remote = _host not in ("localhost", "127.0.0.1")
+    # psycopg2 uses sslmode=require; asyncpg (LlamaIndex) uses ssl=require
+    _ssl_sync  = "?sslmode=require" if _remote else ""
+    _ssl_async = "?ssl=require"     if _remote else ""
     return PGVectorStore(
-        connection_string=f"postgresql://{_user}:{_pwd}@{_host}:{_port}/{_db}{_ssl}",
-        async_connection_string=f"postgresql+asyncpg://{_user}:{_pwd}@{_host}:{_port}/{_db}{_ssl}",
+        connection_string=f"postgresql://{_user}:{_pwd}@{_host}:{_port}/{_db}{_ssl_sync}",
+        async_connection_string=f"postgresql+asyncpg://{_user}:{_pwd}@{_host}:{_port}/{_db}{_ssl_async}",
         table_name=TABLE_NAME,
         embed_dim=EMBED_DIM,
         perform_setup=False,
