@@ -280,7 +280,7 @@ def submit_ticket(request: Request, body: TicketRequest, user: dict = Depends(re
 async def ingest_document(
     request: Request,
     file: UploadFile = File(...),
-    user: dict = Depends(require_role("admin")),
+    user: dict = Depends(require_role("manager", "admin")),
 ):
     if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are supported.")

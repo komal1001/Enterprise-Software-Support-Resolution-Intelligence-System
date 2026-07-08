@@ -76,7 +76,7 @@ export default function App() {
               <h2>Support Ticket Portal</h2>
               <p>Describe your issue. The AI system classifies, retrieves context, assesses severity, and responds.</p>
             </div>
-            {userRole === 'admin' && (
+            {(userRole === 'admin' || userRole === 'manager') && (
               <nav className="tab-nav">
                 <button
                   className={`tab-btn ${activeTab === 'chat' ? 'active' : ''}`}
