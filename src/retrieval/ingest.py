@@ -83,6 +83,11 @@ def ingest_documents() -> None:
         else:
             final_nodes.append(node)
 
+    # Strip NUL bytes before storing — PostgreSQL rejects \x00 in string literals
+    for node in final_nodes:
+        node.text = node.text.replace('\x00', '')
+    final_nodes = [n for n in final_nodes if n.text.strip()]
+
     # Step 4 — embed every node and store vectors in PostgreSQL via pgvector
     vector_store    = _build_vector_store()
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
@@ -171,6 +176,11 @@ def ingest_pdf_bytes(pdf_bytes: bytes, filename: str) -> dict:
                 final_nodes.extend(sentence_splitter.get_nodes_from_documents([node]))
             else:
                 final_nodes.append(node)
+
+        # Strip NUL bytes — PostgreSQL rejects \x00 in string literals (common in Word docs)
+        for node in final_nodes:
+            node.text = node.text.replace('\x00', '')
+        final_nodes = [n for n in final_nodes if n.text.strip()]
 
         vector_store    = _build_vector_store()
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
