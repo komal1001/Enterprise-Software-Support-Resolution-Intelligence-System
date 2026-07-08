@@ -8,7 +8,8 @@ from typing import Optional
 
 _log = logging.getLogger(__name__)
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+import tempfile
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
 from pydantic import BaseModel
 from sse_starlette.sse import EventSourceResponse
 
@@ -20,6 +21,7 @@ from src.graph.graph import compiled_graph, pre_synth_compiled_graph
 from src.agents.agent5_escalation import agent5_escalation
 from src.agents.response_synthesizer import stream_synthesizer_tokens
 from src.guardrails.guardrails import check_guardrails
+from src.guardrails.output_guardrails import check_output
 from src.observability.langfuse_client import start_trace, log_ticket_complete, calculate_cost, timer, log_guardrail_block
 
 router = APIRouter()
@@ -266,6 +268,47 @@ def submit_ticket(request: Request, body: TicketRequest, user: dict = Depends(re
         submitted_at=submitted_at,
         total_cost_usd=round(total_cost, 6),
     )
+
+
+# ---------------------------------------------------------------------------
+# POST /admin/ingest — upload a PDF and index it into pgvector + BM25
+# Admin-only (SLO #12 — no unauthorised data access).
+# ---------------------------------------------------------------------------
+
+@router.post("/admin/ingest")
+@limiter.limit("5/minute")
+async def ingest_document(
+    request: Request,
+    file: UploadFile = File(...),
+    user: dict = Depends(require_role("admin")),
+):
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Only PDF files are supported.")
+
+    contents = await file.read()
+    if len(contents) > 50 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="File too large (max 50 MB).")
+
+    def _run_ingest(pdf_bytes: bytes, filename: str) -> dict:
+        import pathlib
+        from src.retrieval.ingest import ingest_pdf_bytes
+
+        result = ingest_pdf_bytes(pdf_bytes, filename)
+        return result
+
+    try:
+        result = await asyncio.to_thread(_run_ingest, contents, file.filename)
+        return {
+            "status":     "ok",
+            "filename":   file.filename,
+            "chunks":     result.get("chunks", 0),
+            "message":    f"Indexed {result.get('chunks', 0)} chunks from {file.filename}",
+        }
+    except NotImplementedError:
+        raise HTTPException(status_code=501, detail="Ingestion pipeline not available.")
+    except Exception as e:
+        _log.exception("Ingest error: %s", e)
+        raise HTTPException(status_code=500, detail=f"Ingestion failed: {str(e)}")
 
 
 # ---------------------------------------------------------------------------
@@ -517,6 +560,12 @@ async def submit_ticket_stream(
             # Strip internal token-count fields from escalation package before sending
             raw_esc_pkg  = merged_state.get("escalation_package") or {}
             escalation_out = {k: v for k, v in raw_esc_pkg.items() if not k.startswith("_")}
+
+            # Output guardrail — redact PII before the response reaches the user
+            _out = check_output(final_response)
+            if not _out.clean:
+                _log.warning("OUTPUT GUARDRAIL: %s", _out.reason)
+            final_response = _out.response
 
             _log.info("DONE EVENT: final_response length=%d preview=%r", len(final_response or ""), (final_response or "")[:80])
             yield {

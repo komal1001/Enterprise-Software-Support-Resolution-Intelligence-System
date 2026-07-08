@@ -126,5 +126,69 @@ def ingest_documents() -> None:
     print(f"Nodes saved to {NODES_CACHE} for BM25 retrieval.")
 
 
+def ingest_pdf_bytes(pdf_bytes: bytes, filename: str) -> dict:
+    """
+    Ingest a single PDF supplied as raw bytes (used by the /admin/ingest API endpoint).
+
+    Steps: LlamaParse → MarkdownNodeParser → SentenceSplitter → pgvector embed+store
+    → append nodes to in-memory BM25 corpus (_nodes global in rag.py).
+
+    Returns dict with 'chunks' count and 'filename'.
+    Note: nodes_cache.json is NOT written — new chunks survive only in pgvector
+    (persistent on Neon) and the in-memory BM25 corpus (current server session).
+    On next deploy the BM25 corpus reloads from nodes_cache.json, so new documents
+    will still be found via pgvector semantic search but not via BM25 keyword search
+    until nodes_cache.json is regenerated and committed.
+    """
+    import tempfile, pathlib
+
+    # Write bytes to a temp file so LlamaParse / SimpleDirectoryReader can open it
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        tmp.write(pdf_bytes)
+        tmp_path = pathlib.Path(tmp.name)
+
+    try:
+        parser = LlamaParse(
+            api_key=os.environ["LLAMA_CLOUD_API_KEY"],
+            result_type="markdown",
+        )
+        reader = SimpleDirectoryReader(
+            input_files=[str(tmp_path)],
+            file_extractor={".pdf": parser},
+        )
+        # Override metadata so source shows the original filename, not the temp path
+        documents = reader.load_data()
+        for doc in documents:
+            doc.metadata["file_name"] = filename
+
+        markdown_parser  = MarkdownNodeParser()
+        nodes            = markdown_parser.get_nodes_from_documents(documents)
+        sentence_splitter = SentenceSplitter(chunk_size=512, chunk_overlap=50)
+        final_nodes: list = []
+        for node in nodes:
+            if len(node.text) > MAX_NODE_CHARS:
+                final_nodes.extend(sentence_splitter.get_nodes_from_documents([node]))
+            else:
+                final_nodes.append(node)
+
+        vector_store    = _build_vector_store()
+        storage_context = StorageContext.from_defaults(vector_store=vector_store)
+        embed_model     = _build_embed_model()
+        VectorStoreIndex(final_nodes, storage_context=storage_context, embed_model=embed_model)
+
+        # Append to in-memory BM25 corpus for this server session
+        from src.retrieval.rag import _get_nodes
+        existing = _get_nodes()
+        existing.extend(final_nodes)
+        # Invalidate per-thread retriever so it rebuilds with new nodes
+        import threading as _threading
+        from src.retrieval import rag as _rag
+        _rag._thread_local = _threading.local()
+
+        return {"chunks": len(final_nodes), "filename": filename}
+    finally:
+        tmp_path.unlink(missing_ok=True)
+
+
 if __name__ == "__main__":
     ingest_documents()

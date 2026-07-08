@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
+import IngestTab from './components/IngestTab';
 import './App.css';
 
 function makeThreadId() { return `session-${Date.now()}`; }
@@ -18,9 +19,10 @@ const ROLES_CLAIM = 'https://support-resolution-api/roles';
 
 export default function App() {
   const { isAuthenticated, isLoading, user, logout, getAccessTokenSilently } = useAuth0();
-  const [threadId, setThreadId] = useState(makeThreadId);
-  const [stats,    setStats]    = useState(DEFAULT_STATS);
-  const [userRole, setUserRole] = useState('');
+  const [threadId,    setThreadId]    = useState(makeThreadId);
+  const [stats,       setStats]       = useState(DEFAULT_STATS);
+  const [userRole,    setUserRole]    = useState('');
+  const [activeTab,   setActiveTab]   = useState('chat'); // 'chat' | 'ingest'
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -69,15 +71,36 @@ export default function App() {
       />
       <main className="main-content">
         <header className="main-header">
-          <h2>Support Ticket Portal</h2>
-          <p>Describe your issue. The AI system classifies, retrieves context, assesses severity, and responds.</p>
+          <div className="header-row">
+            <div>
+              <h2>Support Ticket Portal</h2>
+              <p>Describe your issue. The AI system classifies, retrieves context, assesses severity, and responds.</p>
+            </div>
+            {userRole === 'admin' && (
+              <nav className="tab-nav">
+                <button
+                  className={`tab-btn ${activeTab === 'chat' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('chat')}
+                >Chat</button>
+                <button
+                  className={`tab-btn ${activeTab === 'ingest' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('ingest')}
+                >Knowledge Base</button>
+              </nav>
+            )}
+          </div>
         </header>
-        <ChatWindow
-          key={threadId}
-          user={{ name: user.name, email: user.email, role: userRole }}
-          threadId={threadId}
-          onTicketComplete={handleTicketComplete}
-        />
+
+        {activeTab === 'chat' ? (
+          <ChatWindow
+            key={threadId}
+            user={{ name: user.name, email: user.email, role: userRole }}
+            threadId={threadId}
+            onTicketComplete={handleTicketComplete}
+          />
+        ) : (
+          <IngestTab />
+        )}
       </main>
     </div>
   );
