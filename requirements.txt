@@ -21,6 +21,7 @@ sqlglot>=23.0.0
 llama-index-core>=0.10.0
 llama-index-vector-stores-postgres>=0.1.0
 llama-index-embeddings-azure-openai>=0.1.0
+llama-index-llms-azure-openai>=0.1.0
 rank-bm25>=0.2.2
 llama-parse>=0.4.0
 

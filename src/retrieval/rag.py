@@ -32,10 +32,22 @@ from llama_index.core.schema import TextNode, NodeWithScore
 from llama_index.core.retrievers import BaseRetriever, QueryFusionRetriever
 from llama_index.vector_stores.postgres import PGVectorStore
 from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
+from llama_index.llms.azure_openai import AzureOpenAI as _LlamaAzureOpenAI
 
-# Prevent LlamaIndex from falling back to the default OpenAI() LLM
-# (which requires OPENAI_API_KEY). We use Azure embeddings only — no LLM needed.
-Settings.llm = None
+load_dotenv()
+
+# Point LlamaIndex at our Azure deployment so it never falls back to the
+# default OpenAI() client (which requires OPENAI_API_KEY).
+# num_queries=1 in QueryFusionRetriever means this LLM is never actually
+# called — but Settings.llm must be set to a real client to suppress
+# "using mock llm" warnings and avoid KeyError on startup.
+Settings.llm = _LlamaAzureOpenAI(
+    model="gpt-4o-mini",
+    deployment_name=os.environ.get("AZURE_OPENAI_DEPLOYMENT", ""),
+    azure_endpoint=os.environ.get("AZURE_OPENAI_ENDPOINT", ""),
+    api_key=os.environ.get("AZURE_OPENAI_API_KEY", ""),
+    api_version=os.environ.get("AZURE_OPENAI_API_VERSION", ""),
+)
 
 load_dotenv()
 
