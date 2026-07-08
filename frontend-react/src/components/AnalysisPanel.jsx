@@ -118,7 +118,7 @@ export default function AnalysisPanel({ response, role, agentSteps = [] }) {
           <span className="meta-label">Confidence</span>
           <span>{confidence}%</span>
         </div>
-        {latencySec != null && (
+        {latencyMin != null && (
           <div>
             <span className="meta-label">Latency</span>
             <span style={{ color: latencyOk ? '#16a34a' : '#dc2626', fontWeight: 600 }}>
