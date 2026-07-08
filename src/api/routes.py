@@ -1,9 +1,12 @@
 import asyncio
 import contextvars
 import json
+import logging
 import threading
 from datetime import datetime, timezone
 from typing import Optional
+
+_log = logging.getLogger(__name__)
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
@@ -380,6 +383,7 @@ async def submit_ticket_stream(
                     yield {"event": "error", "data": json.dumps({"message": "Agent timed out. Please try again."})}
                     return
                 if msg_type == "error":
+                    _log.error("PIPELINE ERROR: %s", data)
                     yield {"event": "error", "data": json.dumps({"message": _user_friendly_error(data)})}
                     return
                 if msg_type == "done":
@@ -477,6 +481,7 @@ async def submit_ticket_stream(
                         yield {"event": "error", "data": json.dumps({"message": "Synthesizer timed out. Please try again."})}
                         return
                     if t_type == "error":
+                        _log.error("SYNTHESIZER ERROR: %s", t_data)
                         yield {"event": "error", "data": json.dumps({"message": _user_friendly_error(t_data)})}
                         return
                     if t_type == "done":
