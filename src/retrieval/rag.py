@@ -27,11 +27,15 @@ from typing import List, Optional
 from dotenv import load_dotenv
 
 from rank_bm25 import BM25Okapi
-from llama_index.core import VectorStoreIndex, StorageContext
+from llama_index.core import VectorStoreIndex, StorageContext, Settings
 from llama_index.core.schema import TextNode, NodeWithScore
 from llama_index.core.retrievers import BaseRetriever, QueryFusionRetriever
 from llama_index.vector_stores.postgres import PGVectorStore
 from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
+
+# Prevent LlamaIndex from falling back to the default OpenAI() LLM
+# (which requires OPENAI_API_KEY). We use Azure embeddings only — no LLM needed.
+Settings.llm = None
 
 load_dotenv()
 
