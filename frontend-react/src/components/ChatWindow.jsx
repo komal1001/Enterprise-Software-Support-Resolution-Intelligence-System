@@ -45,8 +45,9 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
   const [error,          setError]          = useState('');
   const [agentSteps,     setAgentSteps]     = useState([]);
   const [pipelineDone,   setPipelineDone]   = useState(false);
-  const agentStepsRef = useRef([]);
-  const bottomRef = useRef(null);
+  const agentStepsRef    = useRef([]);
+  const streamingTextRef = useRef('');
+  const bottomRef        = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -61,6 +62,7 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
     setError('');
     setStatus('');
     setStreamingText('');
+    streamingTextRef.current = '';
     setAgentSteps([]);
     agentStepsRef.current = [];
     setPipelineDone(false);
@@ -81,19 +83,25 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
         setAgentSteps([...agentStepsRef.current]);
       },
       (token) => {
-        setStreamingText(prev => prev + token);
+        setStreamingText(prev => {
+          const next = prev + token;
+          streamingTextRef.current = next;
+          return next;
+        });
         setStatus('');
       },
       (doneEvent) => {
         const latencyMs   = Date.now() - start;
         const stepsSnapshot = [...agentStepsRef.current];
+        const finalContent  = doneEvent.final_response || streamingTextRef.current || '';
         setPipelineDone(true);
         setStatus('Scoring quality...');
+        streamingTextRef.current = '';
         setStreamingText('');
         setLoading(false);
         setMessages(prev => [...prev, {
           role:       'assistant',
-          content:    doneEvent.final_response,
+          content:    finalContent,
           response:   doneEvent,
           scores:     null,
           agentSteps: stepsSnapshot,

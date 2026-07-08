@@ -518,6 +518,7 @@ async def submit_ticket_stream(
             raw_esc_pkg  = merged_state.get("escalation_package") or {}
             escalation_out = {k: v for k, v in raw_esc_pkg.items() if not k.startswith("_")}
 
+            _log.info("DONE EVENT: final_response length=%d preview=%r", len(final_response or ""), (final_response or "")[:80])
             yield {
                 "event": "done",
                 "data": json.dumps({
