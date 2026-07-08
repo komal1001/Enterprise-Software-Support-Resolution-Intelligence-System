@@ -15,6 +15,7 @@ const MD_COMPONENTS = {
 
 // Convert inline [Source: filename.pdf] citations to markdown links
 function linkifySources(text) {
+  if (!text) return '';
   return text.replace(
     /\[Source:\s*([^\]]+\.pdf)\]/g,
     (_, filename) => {
