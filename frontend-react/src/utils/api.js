@@ -54,7 +54,8 @@ export async function submitTicketStream(
         }
 
         if (!dataStr) continue;
-        const data = JSON.parse(dataStr);
+        let data;
+        try { data = JSON.parse(dataStr); } catch { continue; }
 
         if      (eventType === 'status') onStatus(data);
         else if (eventType === 'token')  onToken(data.token);
