@@ -143,7 +143,8 @@ def ingest_pdf_bytes(pdf_bytes: bytes, filename: str) -> dict:
     import tempfile, pathlib
 
     # Write bytes to a temp file so LlamaParse / SimpleDirectoryReader can open it
-    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+    _suffix = "." + filename.rsplit(".", 1)[-1].lower() if "." in filename else ".pdf"
+    with tempfile.NamedTemporaryFile(suffix=_suffix, delete=False) as tmp:
         tmp.write(pdf_bytes)
         tmp_path = pathlib.Path(tmp.name)
 

@@ -282,8 +282,9 @@ async def ingest_document(
     file: UploadFile = File(...),
     user: dict = Depends(require_role("manager", "admin")),
 ):
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files are supported.")
+    _ALLOWED_EXTS = {".pdf", ".docx", ".doc"}
+    if not file.filename or not any(file.filename.lower().endswith(ext) for ext in _ALLOWED_EXTS):
+        raise HTTPException(status_code=400, detail="Only PDF and Word (.docx/.doc) files are supported.")
 
     contents = await file.read()
     if len(contents) > 50 * 1024 * 1024:

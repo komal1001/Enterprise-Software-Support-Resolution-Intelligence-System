@@ -13,8 +13,9 @@ export default function IngestTab() {
 
   function pickFile(f) {
     if (!f) return;
-    if (!f.name.toLowerCase().endsWith('.pdf')) {
-      setMessage('Only PDF files are supported.');
+    const allowed = ['.pdf', '.docx', '.doc'];
+    if (!allowed.some(ext => f.name.toLowerCase().endsWith(ext))) {
+      setMessage('Only PDF and Word (.docx / .doc) files are supported.');
       setStatus('error');
       return;
     }
@@ -79,7 +80,7 @@ export default function IngestTab() {
         <input
           ref={inputRef}
           type="file"
-          accept=".pdf"
+          accept=".pdf,.docx,.doc"
           style={{ display: 'none' }}
           onChange={e => pickFile(e.target.files[0])}
         />
@@ -92,7 +93,7 @@ export default function IngestTab() {
         ) : (
           <div className="drop-zone-content">
             <span className="drop-icon">⬆</span>
-            <span>Drag & drop a PDF here or <u>click to browse</u></span>
+            <span>Drag & drop a PDF or Word doc here or <u>click to browse</u></span>
           </div>
         )}
       </div>
