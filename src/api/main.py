@@ -79,7 +79,6 @@ _ALLOWED_ORIGINS = [
     "http://localhost:5175",
     "http://localhost:5176",
 ]
-# Add deployed frontend URL from env var — set FRONTEND_URL on Railway/Render
 _frontend_url = os.environ.get("FRONTEND_URL", "")
 if _frontend_url:
     _ALLOWED_ORIGINS.append(_frontend_url)
@@ -87,6 +86,7 @@ if _frontend_url:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
