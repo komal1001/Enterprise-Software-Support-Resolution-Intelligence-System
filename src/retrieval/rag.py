@@ -78,14 +78,17 @@ _thread_local = threading.local()
 # ---------------------------------------------------------------------------
 
 def _build_vector_store() -> PGVectorStore:
+    _host = os.environ.get("POSTGRES_HOST", "localhost")
+    _ssl  = "require" if _host not in ("localhost", "127.0.0.1") else None
     return PGVectorStore.from_params(
         database=os.environ["POSTGRES_DB"],
-        host=os.environ["POSTGRES_HOST"],
+        host=_host,
         port=int(os.environ.get("POSTGRES_PORT", 5432)),
         user=os.environ["POSTGRES_USER"],
         password=os.environ.get("POSTGRES_PASSWORD", ""),
         table_name=TABLE_NAME,
         embed_dim=EMBED_DIM,
+        ssl=_ssl,
     )
 
 
