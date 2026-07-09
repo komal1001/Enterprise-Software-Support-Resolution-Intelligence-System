@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import IngestTab from './components/IngestTab';
+import EscalationsTab from './components/EscalationsTab';
 import './App.css';
 
 function makeThreadId() { return `session-${Date.now()}`; }
@@ -22,7 +23,7 @@ export default function App() {
   const [threadId,    setThreadId]    = useState(makeThreadId);
   const [stats,       setStats]       = useState(DEFAULT_STATS);
   const [userRole,    setUserRole]    = useState('');
-  const [activeTab,   setActiveTab]   = useState('chat'); // 'chat' | 'ingest'
+  const [activeTab,   setActiveTab]   = useState('chat'); // 'chat' | 'escalations' | 'ingest'
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -83,6 +84,10 @@ export default function App() {
                   onClick={() => setActiveTab('chat')}
                 >Chat</button>
                 <button
+                  className={`tab-btn ${activeTab === 'escalations' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('escalations')}
+                >Escalations</button>
+                <button
                   className={`tab-btn ${activeTab === 'ingest' ? 'active' : ''}`}
                   onClick={() => setActiveTab('ingest')}
                 >Knowledge Base</button>
@@ -91,16 +96,16 @@ export default function App() {
           </div>
         </header>
 
-        {activeTab === 'chat' ? (
+        {activeTab === 'chat' && (
           <ChatWindow
             key={threadId}
             user={{ name: user.name, email: user.email, role: userRole }}
             threadId={threadId}
             onTicketComplete={handleTicketComplete}
           />
-        ) : (
-          <IngestTab />
         )}
+        {activeTab === 'escalations' && <EscalationsTab />}
+        {activeTab === 'ingest'      && <IngestTab />}
       </main>
     </div>
   );
