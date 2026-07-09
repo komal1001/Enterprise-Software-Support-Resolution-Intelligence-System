@@ -33,7 +33,7 @@ from slowapi.errors import RateLimitExceeded
 load_dotenv()
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import router
+from src.api.routers import health, tickets, admin
 from src.api.limiter import limiter
 
 _DIST = Path(__file__).parent.parent.parent / "frontend-react" / "dist"
@@ -105,7 +105,9 @@ if _DOCS.exists():
 # Routes
 # ---------------------------------------------------------------------------
 
-app.include_router(router)
+app.include_router(health.router)
+app.include_router(tickets.router)
+app.include_router(admin.router)
 
 
 # ---------------------------------------------------------------------------
