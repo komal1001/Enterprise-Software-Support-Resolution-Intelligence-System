@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 
 from src.graph.state import TicketState
-from src.retrieval.sql import query
+from src.rag.sql import query
 
 load_dotenv()
 

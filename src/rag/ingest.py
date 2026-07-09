@@ -1,7 +1,7 @@
 """
 Ingestion pipeline — run ONCE before starting the API server.
 
-    python -m src.retrieval.ingest
+    python -m src.rag.ingest
 
 What this does:
   Step 1 — LlamaParse  : sends 7 PDFs to LlamaParse cloud API → gets back clean Markdown
@@ -22,7 +22,7 @@ from llama_parse import LlamaParse
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
 from llama_index.core.node_parser import MarkdownNodeParser, SentenceSplitter
 
-from src.retrieval.rag import (
+from src.rag.retrieval import (
     _build_vector_store,
     _build_embed_model,
     NODES_CACHE,
@@ -188,12 +188,12 @@ def ingest_pdf_bytes(pdf_bytes: bytes, filename: str) -> dict:
         VectorStoreIndex(final_nodes, storage_context=storage_context, embed_model=embed_model)
 
         # Append to in-memory BM25 corpus for this server session
-        from src.retrieval.rag import _get_nodes
+        from src.rag.retrieval import _get_nodes
         existing = _get_nodes()
         existing.extend(final_nodes)
         # Invalidate per-thread retriever so it rebuilds with new nodes
         import threading as _threading
-        from src.retrieval import rag as _rag
+        from src.rag import retrieval as _rag
         _rag._thread_local = _threading.local()
 
         return {"chunks": len(final_nodes), "filename": filename}

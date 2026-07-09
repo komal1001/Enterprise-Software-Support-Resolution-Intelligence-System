@@ -1,5 +1,5 @@
 """
-Semantic cache for RAG retrieval — src/retrieval/semantic_cache.py
+Semantic cache for RAG retrieval — src/rag/semantic_cache.py
 
 Caches retrieved chunks for semantically similar queries so the embedding
 API call + pgvector search + BM25 scoring are skipped on cache hits.

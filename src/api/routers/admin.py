@@ -61,7 +61,7 @@ async def ingest_document(
         raise HTTPException(status_code=400, detail="File too large (max 50 MB).")
 
     def _run_ingest(doc_bytes: bytes, filename: str) -> dict:
-        from src.retrieval.ingest import ingest_pdf_bytes
+        from src.rag.ingest import ingest_pdf_bytes
         return ingest_pdf_bytes(doc_bytes, filename)
 
     try:

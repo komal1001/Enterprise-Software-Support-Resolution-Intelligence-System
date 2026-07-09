@@ -223,7 +223,7 @@ def retrieve(query: str, top_k: int = TOP_K, use_cache: bool = True) -> list[dic
     use_cache: True for RAG-only tickets (safe — docs don't change per customer).
                False for SQL/Hybrid/Multi-Agent routes (customer-specific context).
     """
-    from src.retrieval.semantic_cache import cache_lookup, cache_store
+    from src.rag.semantic_cache import cache_lookup, cache_store
 
     query_vector = None
     if use_cache:

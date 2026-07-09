@@ -6,7 +6,7 @@ from langfuse import observe
 from pydantic import BaseModel
 
 from src.graph.state import TicketState
-from src.retrieval.rag import retrieve
+from src.rag.retrieval import retrieve
 from src.observability.langfuse_client import get_langfuse, get_cached_prompt
 
 load_dotenv()
@@ -129,7 +129,7 @@ def agent2_rag(state: TicketState) -> TicketState:
 
     chunks = retrieve(refined_query, use_cache=use_cache)
 
-    from src.retrieval.semantic_cache import cache_stats
+    from src.rag.semantic_cache import cache_stats
     stats = cache_stats()
 
     state["rag_result"] = {"query": refined_query, "chunks": chunks}
