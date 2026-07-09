@@ -209,6 +209,36 @@ async def submit_ticket_stream(
         classification = {}
 
         try:
+            # ── Pre-flight: skip full pipeline for very short first messages ──
+            # "who are you?", "fuck off", "hello" — no technical content,
+            # running 4 agents wastes ~$0.03 per message.
+            # Only on first message (no history) — follow-ups always go through.
+            _words = body.ticket_text.strip().split()
+            if len(_words) < 5 and not body.conversation_history:
+                final_response = _CLARIFICATION_PROMPT
+                _clf_stub = {
+                    "category": "ambiguous", "severity": "Low",
+                    "routing_path": "RAG", "confidence": 0.0,
+                    "reasoning": "Input too short to classify — clarification requested",
+                }
+                yield {
+                    "event": "done",
+                    "data": json.dumps({
+                        "final_response":       final_response,
+                        "classification":       _clf_stub,
+                        "severity_assessment":  {},
+                        "escalation_package":   {},
+                        "conversation_history": body.conversation_history + [
+                            {"role": "user",      "content": body.ticket_text},
+                            {"role": "assistant", "content": final_response},
+                        ],
+                        "sources":      [],
+                        "submitted_at": submitted_at,
+                        "latency_ms":   round(timer() - t0),
+                    }),
+                }
+                return
+
             # ── Phase 1: run agents 1–4 ───────────────────────────────────────
             def run_pre_synth():
                 _thread_loop = asyncio.new_event_loop()
