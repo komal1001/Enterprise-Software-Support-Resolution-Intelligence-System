@@ -286,7 +286,7 @@ Pending (placeholder functions exist):
 | 7 | Guardrails (prompt injection, policy violation, Langfuse logging, rate limiting, DB timeout) | Done |
 | 8 | Eval framework: LLM judge, escalation recall/precision, ThreadPoolExecutor parallel eval, guardrail eval | Done |
 | 9 | RBAC (auth.py done), React frontend (chat UI + SSE streaming), deployment | In Progress |
-| Post-deploy | OpenTelemetry for infrastructure tracing, RAGAS integration, Jira API, PostgresSaver | TODO |
+| Post-deploy | OpenTelemetry for infrastructure tracing, RAGAS integration, Jira API, PostgresSaver, persist Agent 5 escalations to `support_tickets` (see TODO in `agent5_escalation.py`) | TODO |
 
 ## Sprint 9 Notes (In Progress)
 Changes made this sprint:

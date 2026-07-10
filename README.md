@@ -1,298 +1,286 @@
-# Capstone Project  
 # Enterprise Software Support & Resolution Intelligence System
-*(SLO-Bound Autonomous Agentic AI System)*
+
+**Production-grade autonomous agentic AI system for enterprise SaaS support triage.**
+
+Live demo → [enterprise-software-support-resolut.vercel.app](https://enterprise-software-support-resolut.vercel.app)
 
 ---
 
-## 📌 Problem Statement
+## What It Does
 
-A large enterprise SaaS organization provides multiple software products across regions and industries. The Support Operations team handles thousands of technical queries, configuration issues, feature requests, integration problems, and incident escalations every month.
+Enterprise support teams receive thousands of tickets monthly — usage questions, API failures, production outages, billing disputes. Manual triage is slow, inconsistent, and expensive.
 
-The Support Desk receives approximately:
+This system replaces manual triage with a 5-agent AI pipeline that:
 
-- ~4,000–6,000 support tickets per month
-- 40–50% related to product usage and configuration
-- 20–25% integration/API-related issues
-- 0–15% performance and latency concerns
-- 10–15% production incidents requiring escalation 
-
-These issues require consulting product documentation, troubleshooting guides, incident logs, and structured customer account records.
-
-Manual triage is inconsistent, slow, and expensive. Misclassification or delayed resolution can result in:
-- SLA violations
-- Customer churn
-- Revenue loss
-- Escalation overload
-- Reputational damage
-
-Existing support systems rely on static search, rule-based routing, and manual escalation, lacking intelligent reasoning and measurable service guarantees.
+- **Classifies** the ticket into one of 7 categories with confidence scoring
+- **Routes** to the right retrieval pipeline (RAG / SQL / Hybrid / Multi-Agent)
+- **Retrieves** relevant documentation chunks and customer account data
+- **Re-evaluates severity** using all retrieved evidence (not just ticket text)
+- **Escalates** critical and low-confidence cases to a human team with full context
+- **Streams** a cited response in real time via Server-Sent Events
 
 ---
 
-## 🌍 Current Situation
+## Architecture
 
-### Current Manual Process
+```
+User Ticket
+    │
+    ▼
+Agent 1 — Classifier
+(category · severity · routing_path · confidence)
+    │
+    ├── RAG ──────────────────────────────────► Agent 2 (RAG)
+    │                                               │
+    ├── SQL ──────────────► Agent 3 (SQL)           │
+    │                           │                   │
+    ├── Hybrid ──► Agent 3 ──► Agent 2              │
+    │                                               │
+    └── Multi-Agent ──► Agent 3 ──► Agent 2 ──► Agent 5 (Escalation)
+                                        │
+                                    Agent 4 (Severity Re-assessment) ← runs on EVERY ticket
+                                        │
+                                    Response Synthesizer → SSE stream → React UI
+```
 
-1. Ticket submitted via portal or email
-2. Level-1 agent manually reviews issue
-3. Searches documentation repository
-4. Checks structured customer account data
-5. Escalates to engineering if unresolved
+**4 Routing Paths:**
 
-Average resolution time: 12–48 hours
-Production incidents: Multi-level escalation cycles
-
----
-
-## 💰 The Cost of the Problem
-
-### Direct Costs
-- Support agent workload
-- Engineering escalation time
-- SLA penalty credits
-
-### Indirect Costs
-
-- ustomer dissatisfaction
-- Reduced product adoption
-- Slow incident recovery
-
-Increased operational overhead
-
----
-
-## ❗ Why Current Systems Fail
-
-### Pattern Analysis of Monthly Queries
-
-- Pattern Analysis of Monthly Queries
-- 55% require interpretation of unstructured documentation
-- 30% require structured customer/account lookups
-- 15% require hybrid reasoning (documentation + system status validation)
-
-### Key Inefficiencies
-
-- Static keyword search
-- No intelligent intent classification
-- No structured routing between RAG and SQL
-- No confidence scoring
-- Limited audit traceability
-- No SLO-based monitoring
-- No automated escalation for high-priority incidents
+| Path | Trigger | Agents |
+|---|---|---|
+| RAG | Documentation / how-to queries | 1 → 2 → 4 → Synth |
+| SQL | Account / billing / ticket lookups | 1 → 3 → 4 → Synth |
+| Hybrid | Needs both docs + account context | 1 → 3 → 2 → 4 → Synth |
+| Multi-Agent | High/Critical severity | 1 → 3 → 2 → 4 → 5 → Synth |
 
 ---
 
-## 🎯 Project Goal
+## Tech Stack
 
-Build a Production-Grade Autonomous Agentic AI System that:
-
-- Resolves software support queries conversationally
-- Classifies intent and priority levels
-- Routes queries intelligently to RAG, SQL, or hybrid workflows
-- Performs multi-agent validation for high-impact incidents
-- Provides source attribution and resolution reasoning
-- Logs decisions for traceability
-- Escalates critical or low-confidence cases
-- Meets defined Service Level Objectives (SLOs)
-
----
-
-## 🧠 Core Requirements
-
-### 1️⃣ Intelligent Query Handling
-
-The system must:
-
-- Detect issue category (usage, integration, incident, billing)
-- Classify severity (Low / Medium / High / Critical)
-- Maintain multi-turn troubleshooting context
-- Identify need for structured account validation
-- Enforce role-based access control
+| Layer | Technology |
+|---|---|
+| Agent orchestration | LangGraph (StateGraph with conditional routing) |
+| LLM | Azure OpenAI GPT-4o mini |
+| Embeddings | Azure OpenAI text-embedding-3-small |
+| Vector DB | PostgreSQL + pgvector |
+| Structured data | PostgreSQL (parameterized queries + sqlglot validation) |
+| Document parsing | LlamaParse (multimodal — tables, images, headers) |
+| API | FastAPI + Uvicorn |
+| Streaming | Server-Sent Events (SSE) via sse-starlette |
+| Frontend | React + Vite |
+| Auth | Auth0 JWT + RBAC (l1-agent / manager / admin) |
+| Observability | Langfuse (traces, spans, costs, RAGAS scores) |
+| Evaluation | RAGAS (faithfulness, answer relevance, context precision) |
+| Rate limiting | slowapi (10 req/min per IP) |
+| Deployment | Railway (backend) + Vercel (frontend) + Neon (PostgreSQL) |
 
 ---
 
-### 2️⃣ Intelligent Query Routing
+## The 5 Agents
 
-Route dynamically to:
+### Agent 1 — Classifier
+Classifies every ticket into one of 7 categories using `with_structured_output` (OpenAI function calling — schema enforced at API level, no prompt parsing). Returns category, severity, routing path, confidence score, and reasoning. Falls back to `ambiguous + Multi-Agent` on LLM failure so tickets always reach a human.
 
-- **RAG** → Product documentation, troubleshooting guides
-- **SQL** → Account status, subscription plan, incident logs
-- **Hybrid** → Documentation guidance + structured validation
-- **Multi-Agent Flow** → Critical incident validation and escalation
+**7 categories:** `usage_configuration` · `integration_api` · `performance_latency` · `production_incident` · `billing` · `security` · `ambiguous`
 
----
+### Agent 2 — RAG (Knowledge Retrieval)
+Hybrid retrieval: pgvector semantic search + BM25 keyword search, fused via Reciprocal Rank Fusion (RRF). Returns top 5 chunks with source attribution. Semantic cache (cosine ≥ 0.92) returns cached chunks instantly for repeated queries.
 
-### 3️⃣ Multi-Agent Orchestration
+**RAG corpus:** 7 product PDFs → LlamaParse → MarkdownNodeParser → SentenceSplitter → 155 nodes in pgvector
 
-Minimum required agents:
+### Agent 3 — SQL (Account Data)
+Natural language → SQL via GPT-4o mini + sqlglot AST validation. Only SELECT statements allowed. Allowlisted tables only. MAX_ROWS=100. 5-second query timeout. ThreadedConnectionPool (1–5 connections) with auto-reconnect ping for Neon cold starts.
 
-- Intent Classification Agent
-- ocumentation Retrieval Agent
-- Account Validation Agent
-- Incident Severity Assessment Agent
-- Escalation Manager Agent
+### Agent 4 — Severity Re-assessment *(runs on EVERY ticket)*
+Two-phase safety net:
+1. **Hard rules** (deterministic) — ambiguous category, confidence below per-category threshold, Critical severity, High + production/security → always escalate
+2. **LLM re-evaluation** — re-reads ticket + RAG chunks + SQL rows to catch hidden signals Agent 1 missed
 
-Agents must operate in a Plan–Act–Check workflow with reflection and correction.
+**Confidence thresholds:** `production_incident` 0.85 · `security` 0.85 · `integration_api` 0.70 · `performance_latency` 0.70 · `usage_configuration` 0.65 · `billing` 0.65 · `ambiguous` 0.00
 
----
-
-### 4️⃣ Source Attribution & Trust
-
-Every response must include:
-
-- Referenced documentation links
-- Structured validation outputs (if SQL involved)
-- Confidence score
-- Severity classification
-- Clear troubleshooting steps
-
+### Agent 5 — Escalation Manager
+Assembles a full context package: ticket history, account data, incident logs (last 5), documentation context, agent reasoning trace. Routes to correct human team (L2/L3). Generates escalation reference number and Jira ticket ID.
 
 ---
 
-### 5️⃣ Human Escalation
+## Key Features
 
-The system must escalate when:
+**Guardrails (Input + Output)**
+- Input: blocks prompt injection, PII in ticket text, policy violations before any LLM call
+- Output: redacts PII (email, phone, SSN, credit card) from AI responses
 
-- Severity = Critical
-- Confidence score < threshold
-- Production outage suspected
-- Security vulnerability detected
-- Explicit request for human support
+**Multi-turn conversation**
+- MemorySaver persists context across turns within a session
+- Ambiguous first messages trigger clarification prompt instead of pipeline
+- Very short messages (< 5 words) skip the full pipeline — instant clarification
 
-Escalation must include full context transfer:
-- Ticket history
-- Retrieved documentation
-- Structured account data
-- Incident logs
-- Agent reasoning trace
+**Real-time SSE streaming**
+- `status` events after each agent (live progress indicators)
+- `token` events word-by-word during synthesis
+- `done` event with full response, classification, severity, sources, latency
+- `scores` event with RAGAS metrics after response is shown (zero UX latency impact)
 
----
+**RBAC**
+- `l1-agent` — submit tickets
+- `manager` — view escalations, ingest documents
+- `admin` — full access
 
-## 📊 Success Criteria (Measurable Outcomes)
+**Online document ingestion**
+- Upload PDF or Word (.docx/.doc) via Knowledge Base tab
+- LlamaParse → chunk → embed → pgvector (persistent) + in-memory BM25 (session)
 
-The system must meet defined SLOs:
-
-- **Task Success Rate (TSR)** ≥ 90%  
-- **P95 Latency** ≤ defined threshold (e.g., 3–6 seconds)  
-- Structured SQL correctness ≥ 95%  
-- Critical incident misclassification rate < 3%
-- Controlled cost per ticket within defined budget
-
----
-
-## ⚙️ Technical Scope
-
-### System Layers
-
-1. API Layer (FastAPI, authentication, validation)
-2. Agent Orchestration Layer (LangGraph/CrewAI)
-3. Retrieval & Knowledge Layer (RAG + SQL)
-4. External Tools Layer (MCP integrations if required)
-5. Evaluation & Observability Layer (Langfuse, metrics, tracing)
-6. Human-in-the-Loop Layer (Escalation + audit logs)
+**Observability**
+- Every ticket creates a Langfuse trace with child spans per agent
+- Token counts, cost, latency, RAGAS scores attached to each trace
+- Azure OpenAI prefix caching for system prompts > 1024 tokens
 
 ---
 
-## 📚 Sample Dataset Guidance
+## 14 Service Level Objectives (SLOs)
 
-Learners may use:
-
-- Public SaaS documentation
-- Open-source product manuals
-- Synthetic API documentation
-- Synthetic customer subscription records
-- Synthetic incident logs
-- Public knowledge base articles 
-
-No proprietary or confidential corporate documents should be used.
-
-Structured Tables Included:
-- `customers`
-- `support_tickets`
-- `incident_logs`
-- `knowlege_article_usage`
-
----
-
-## High-Risk Scenario Examples (Mandatory Multi-Agent Validation Cases)
-
-The system must correctly detect, route, and escalate the following high-risk scenarios:
-
-- Production outage affecting premium customers
-- Security vulnerability exposure in deployed API
-- Subscription downgrade impacting active integrations
-- Account suspension due to payment failure during incident
-- Data loss complaint without supporting logs
-- Multiple tickets indicating systemic failure pattern
-- Incident log shows unresolved critical alert
-- Conflicting documentation guidance across versions
-
-These scenarios must trigger:
-- Severity re-evaluation
-- Multi-agent validation workflow
-- Confidence recalculation
-- Escalation to human support when required
-
-## 📦 Deliverables
-
-1. Architecture Diagram  
-2. Agent Workflow Diagram  
-3. RAG + SQL Integration  
-4. Multi-Agent Orchestration  
-5. SLO Definition & Evaluation Report  
-6. Observability Dashboard Evidence  
-7. Escalation Workflow Implementation  
-8. 4–6 Minute Live Demo  
-9. Deployment & Runbook Documentation  
+| # | Category | SLO | Target |
+|---|---|---|---|
+| 1 | Quality | Task Success Rate | ≥ 90% |
+| 2 | Quality | Answer Faithfulness | ≥ 95% |
+| 3 | Quality | SQL Correctness | ≥ 95% |
+| 4 | Quality | Answer Relevance | ≥ 0.85 |
+| 5 | Speed | P95 Latency — Standard | ≤ 5s |
+| 6 | Speed | P95 Latency — Multi-Agent | ≤ 10s |
+| 7 | Retrieval | Recall@5 | ≥ 90% |
+| 8 | Retrieval | Source Attribution Rate | 100% |
+| 9 | Retrieval | Context Precision | ≥ 0.80 |
+| 10 | Safety | Critical Misclassification Rate | < 3% |
+| 11 | Safety | Escalation Recall | 100% |
+| 12 | Safety | Unauthorized Data Access | 0 violations |
+| 13 | Safety | Guardrail Effectiveness | 100% |
+| 14 | Cost | Cost Per Ticket | ≤ $0.05 avg · $0.15 cap |
 
 ---
 
-## ⚠️ Important Note
+## Project Structure
 
-This system is intended to assist policy and compliance teams by providing explainable insights and structured retrieval. It does not replace legal or regulatory professionals. High-risk or ambiguous queries must trigger escalation workflows.
+```
+src/
+  agents/
+    agent1_classify.py       — classification + routing decision
+    agent2_rag.py            — RAG retrieval + semantic cache
+    agent3_sql.py            — NL→SQL with sqlglot validation
+    agent4_severity.py       — severity re-assessment + hard escalation rules
+    agent5_escalation.py     — escalation package + full context transfer
+    response_synthesizer.py  — streaming response synthesis
+  graph/
+    state.py                 — TicketState TypedDict
+    graph.py                 — LangGraph wiring, 4 routing paths
+  api/
+    main.py                  — FastAPI app, CORS, OTel, startup warmup
+    schemas.py               — Pydantic request/response models
+    auth.py                  — Auth0 JWT + RBAC
+    limiter.py               — slowapi rate limiter
+    routers/
+      health.py              — GET /health
+      tickets.py             — POST /ticket, POST /ticket/stream (SSE)
+      admin.py               — GET /escalations, POST /admin/ingest
+  rag/
+    ingest.py                — LlamaParse → chunk → embed → pgvector
+    retrieval.py             — hybrid BM25 + pgvector + RRF + semantic cache
+    semantic_cache.py        — in-memory LRU semantic cache (cosine ≥ 0.92)
+    sql.py                   — NL→SQL agent with connection pool
+  guardrails/
+    guardrails.py            — input guardrails (injection, PII, policy)
+    output_guardrails.py     — output PII redaction
+  observability/
+    langfuse_client.py       — traces, spans, cost calc, prompt cache
+
+frontend-react/              — React + Vite chat UI
+  src/components/
+    ChatWindow.jsx           — SSE streaming, multi-turn chat
+    AnalysisPanel.jsx        — agent pipeline visualization
+    EscalationsTab.jsx       — manager escalation dashboard
+    IngestTab.jsx            — PDF/Word document upload
+
+eval/
+  golden_set.json            — 51 test cases (TC-01 to TC-51)
+  eval.py                    — classification + LLM judge + RAGAS + guardrail eval
+
+database/
+  schema.sql                 — customers, support_tickets, incident_logs, knowledge_article_usage
+  generate_data.py           — 120 customers, 1000 tickets, 50 incidents
+```
 
 ---
 
-## 🚀 Capstone Outcome
+## API Endpoints
 
-By completing this project, learners will demonstrate the ability to:
-
-- Engineer a production-grade agentic AI system  
-- Implement intelligent query routing across multiple data sources  
-- Build stateful multi-agent orchestration workflows  
-- Enforce guardrails and measurable SLOs  
-- Deliver an enterprise-ready AI system with auditability, reliability, and human oversight  
-
----
-
-## 🧪 Evaluation Criteria
-
-The system will be evaluated on:
-
-- Architectural quality  
-- Multi-agent orchestration depth  
-- Retrieval performance  
-- Structured data correctness  
-- Guardrail effectiveness  
-- SLO compliance  
-- Human handoff design  
-- Code modularity  
-- Documentation clarity  
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/health` | None | Liveness probe |
+| GET | `/escalations` | manager / admin | All escalated tickets |
+| POST | `/ticket` | all roles | Synchronous ticket submission |
+| POST | `/ticket/stream` | all roles | SSE streaming (used by UI) |
+| POST | `/admin/ingest` | manager / admin | Upload PDF/Word to knowledge base |
 
 ---
 
-## 🚀 Getting Started
+## Running Locally
 
-1. Set up PostgreSQL with pgvector  
-2. Create structured policy database schema  
-3. Ingest enterprise documents  
-4. Implement RAG pipeline  
-5. Add SQL integration  
-6. Implement query routing  
-7. Add agent orchestration  
-8. Integrate guardrails  
-9. Define and measure SLOs  
-10. Implement escalation workflows  
-11. Deploy and test end-to-end  
+**Prerequisites:** Python 3.12, Node 18+, PostgreSQL 16 with pgvector
+
+```bash
+# 1. Clone and install
+pip install -r requirements.txt
+
+# 2. Set environment variables
+cp .env.example .env
+# Fill in: Azure OpenAI, PostgreSQL, Langfuse, LlamaCloud, Auth0
+
+# 3. Set up database
+psql -U postgres -c "CREATE DATABASE support_intelligence;"
+psql -U postgres -d support_intelligence -f database/schema.sql
+python database/generate_data.py
+
+# 4. Ingest documents
+python -m src.rag.ingest
+
+# 5. Start backend
+uvicorn src.api.main:app --reload --port 8000
+
+# 6. Start frontend
+cd frontend-react && npm install && npm run dev
+```
 
 ---
+
+## Deployment
+
+| Service | Platform |
+|---|---|
+| Backend API | Railway (auto-deploy from GitHub) |
+| Frontend | Vercel (auto-deploy from GitHub) |
+| PostgreSQL + pgvector | Neon (serverless, never pauses) |
+
+---
+
+## Evaluation
+
+```bash
+# Run full golden set evaluation (51 test cases)
+python -m eval.eval --pipeline
+
+# Includes: classification accuracy, LLM judge, RAGAS, guardrail effectiveness
+```
+
+---
+
+## Key Architecture Decisions
+
+- **LangGraph over CrewAI** — deterministic routing guarantees 100% escalation recall (SLO #11). CrewAI's autonomous agents cannot make this guarantee.
+- **LlamaParse over pypdf** — multimodal parsing preserves tables as markdown; pypdf garbles table structure making it useless for RAG.
+- **pgvector over Pinecone** — single PostgreSQL database for both structured and vector data; simpler ops.
+- **Agent 4 on every ticket** — even RAG-only tickets can hide critical signals (frustrated customer, SLA breach embedded in casual language).
+- **Neon over Supabase** — Supabase free tier pauses after 7 days (20-30s cold start); Neon never pauses projects (~1-2s compute wake).
+
+---
+
+## Author
+
+**Komal Bansal** — NIIT Agentic AI Programme  
+[LinkedIn](https://linkedin.com/in/komalbansal) · [GitHub](https://github.com/komal1001)

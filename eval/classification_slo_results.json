@@ -1,0 +1,13 @@
+{
+  "total_cases": 55,
+  "scored_cases": 52,
+  "errors": 3,
+  "tsr": 88.46,
+  "category_accuracy": 94.23,
+  "risk_classification_accuracy_severity_match": 92.31,
+  "query_routing_accuracy_route_match": 96.15,
+  "critical_cases_count": 8,
+  "critical_misclassification_rate": 0.0,
+  "guardrail_effectiveness": "3/3",
+  "guardrail_pass_pct": 100.0
+}

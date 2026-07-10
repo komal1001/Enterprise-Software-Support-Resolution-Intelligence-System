@@ -273,6 +273,15 @@ def agent5_escalation(state: TicketState) -> TicketState:
         "_output_tokens": output_tokens,
     }
 
+    # TODO: escalation_package["team"] is used for the Jira issue and the
+    # customer-facing message below, but is never written back to
+    # support_tickets.assigned_team — so live escalations never appear on
+    # the manager /escalations dashboard (admin.py reads that column, and
+    # it's currently only populated by database/generate_data.py's seed
+    # data). Fix: add a pooled INSERT into support_tickets here (reuse
+    # src/rag/sql.py's _get_conn()/_get_pool(), not a fresh connect() —
+    # see ADR-015), non-blocking on failure like the Jira call below.
+
     # Create Jira issue — non-blocking, failure does not abort the escalation
     jira_key = None
     try:

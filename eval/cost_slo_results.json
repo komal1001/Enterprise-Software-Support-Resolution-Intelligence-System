@@ -1,0 +1,16 @@
+{
+  "total_cases": 52,
+  "scored_cases": 51,
+  "errors": 1,
+  "avg_cost_per_ticket": 0.00105,
+  "max_cost_per_ticket": 0.00169,
+  "hard_cap_breaches": [],
+  "by_route_avg_cost": {
+    "RAG": 0.00072,
+    "SQL": 0.00089,
+    "Hybrid": 0.00129,
+    "Multi-Agent": 0.00146
+  },
+  "slo14_avg_pass": true,
+  "slo14_cap_pass": true
+}

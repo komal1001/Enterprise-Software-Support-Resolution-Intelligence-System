@@ -147,6 +147,11 @@ def submit_ticket(
     else:
         final_response = state.get("final_response") or "Your ticket has been received and is being processed."
 
+    _out = check_output(final_response)
+    if not _out.clean:
+        _log.warning("OUTPUT GUARDRAIL: %s", _out.reason)
+    final_response = _out.response
+
     total_cost    = agent1_cost + agent3_cost + agent4_cost + agent5_cost + synth_cost
     total_latency = timer() - t0
 
@@ -210,7 +215,7 @@ async def submit_ticket_stream(
 
         try:
             # ── Pre-flight: skip full pipeline for very short first messages ──
-            # "who are you?", "fuck off", "hello" — no technical content,
+            # "who are you?", "what's up?", "hello" — no technical content,
             # running 4 agents wastes ~$0.03 per message.
             # Only on first message (no history) — follow-ups always go through.
             _words = body.ticket_text.strip().split()
@@ -368,6 +373,15 @@ async def submit_ticket_stream(
                 )
 
             # ── Phase 3: done event ───────────────────────────────────────────
+            # Output guardrail runs BEFORE updated_history is built — otherwise
+            # conversation_history would carry the unredacted response forward
+            # into the next turn's request payload, leaking PII the guardrail
+            # just scrubbed from final_response.
+            _out = check_output(final_response)
+            if not _out.clean:
+                _log.warning("OUTPUT GUARDRAIL: %s", _out.reason)
+            final_response = _out.response
+
             rag_result = merged_state.get("rag_result") or {}
             _route     = (merged_state.get("classification") or {}).get("routing_path", "")
             sources    = (
@@ -383,11 +397,6 @@ async def submit_ticket_stream(
             severity_out   = {k: v for k, v in severity_assessment.items() if not k.startswith("_")}
             raw_esc_pkg    = merged_state.get("escalation_package") or {}
             escalation_out = {k: v for k, v in raw_esc_pkg.items() if not k.startswith("_")}
-
-            _out = check_output(final_response)
-            if not _out.clean:
-                _log.warning("OUTPUT GUARDRAIL: %s", _out.reason)
-            final_response = _out.response
 
             _log.info("DONE EVENT: final_response length=%d preview=%r", len(final_response or ""), (final_response or "")[:80])
             yield {
