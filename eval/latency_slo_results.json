@@ -1,0 +1,281 @@
+{
+  "total_cases": 52,
+  "scored_cases": 52,
+  "errors": 0,
+  "standard_route": {
+    "count": 42,
+    "p95_ms": 30687.0,
+    "max_ms": 271250.0,
+    "slo_target_ms": 5000,
+    "slo_pass": false
+  },
+  "multi_agent_route": {
+    "count": 10,
+    "p95_ms": 20907.0,
+    "max_ms": 20907.0,
+    "slo_target_ms": 10000,
+    "slo_pass": false
+  },
+  "per_case": [
+    {
+      "tc_id": "TC-01",
+      "route": "RAG",
+      "latency_ms": 28516.0
+    },
+    {
+      "tc_id": "TC-02",
+      "route": "SQL",
+      "latency_ms": 30687.0
+    },
+    {
+      "tc_id": "TC-03",
+      "route": "Hybrid",
+      "latency_ms": 17500.0
+    },
+    {
+      "tc_id": "TC-04",
+      "route": "Multi-Agent",
+      "latency_ms": 20907.0
+    },
+    {
+      "tc_id": "TC-05",
+      "route": "Multi-Agent",
+      "latency_ms": 19812.0
+    },
+    {
+      "tc_id": "TC-06",
+      "route": "Hybrid",
+      "latency_ms": 17328.0
+    },
+    {
+      "tc_id": "TC-07",
+      "route": "Multi-Agent",
+      "latency_ms": 15938.0
+    },
+    {
+      "tc_id": "TC-08",
+      "route": "Hybrid",
+      "latency_ms": 15890.0
+    },
+    {
+      "tc_id": "TC-10",
+      "route": "Hybrid",
+      "latency_ms": 19079.0
+    },
+    {
+      "tc_id": "TC-11",
+      "route": "Multi-Agent",
+      "latency_ms": 19937.0
+    },
+    {
+      "tc_id": "TC-12",
+      "route": "Multi-Agent",
+      "latency_ms": 19547.0
+    },
+    {
+      "tc_id": "TC-13",
+      "route": "Multi-Agent",
+      "latency_ms": 18078.0
+    },
+    {
+      "tc_id": "TC-14",
+      "route": "Multi-Agent",
+      "latency_ms": 16109.0
+    },
+    {
+      "tc_id": "TC-15",
+      "route": "Hybrid",
+      "latency_ms": 14359.0
+    },
+    {
+      "tc_id": "TC-16",
+      "route": "Hybrid",
+      "latency_ms": 19329.0
+    },
+    {
+      "tc_id": "TC-17",
+      "route": "Hybrid",
+      "latency_ms": 19437.0
+    },
+    {
+      "tc_id": "TC-18",
+      "route": "Hybrid",
+      "latency_ms": 17281.0
+    },
+    {
+      "tc_id": "TC-19",
+      "route": "RAG",
+      "latency_ms": 12391.0
+    },
+    {
+      "tc_id": "TC-20",
+      "route": "RAG",
+      "latency_ms": 12672.0
+    },
+    {
+      "tc_id": "TC-21",
+      "route": "RAG",
+      "latency_ms": 10734.0
+    },
+    {
+      "tc_id": "TC-22",
+      "route": "RAG",
+      "latency_ms": 12063.0
+    },
+    {
+      "tc_id": "TC-23",
+      "route": "RAG",
+      "latency_ms": 11359.0
+    },
+    {
+      "tc_id": "TC-24",
+      "route": "RAG",
+      "latency_ms": 13844.0
+    },
+    {
+      "tc_id": "TC-25",
+      "route": "RAG",
+      "latency_ms": 11187.0
+    },
+    {
+      "tc_id": "TC-26",
+      "route": "RAG",
+      "latency_ms": 10828.0
+    },
+    {
+      "tc_id": "TC-27",
+      "route": "RAG",
+      "latency_ms": 10657.0
+    },
+    {
+      "tc_id": "TC-28",
+      "route": "RAG",
+      "latency_ms": 271250.0
+    },
+    {
+      "tc_id": "TC-29",
+      "route": "RAG",
+      "latency_ms": 14343.0
+    },
+    {
+      "tc_id": "TC-30",
+      "route": "RAG",
+      "latency_ms": 15172.0
+    },
+    {
+      "tc_id": "TC-31",
+      "route": "RAG",
+      "latency_ms": 11313.0
+    },
+    {
+      "tc_id": "TC-32",
+      "route": "RAG",
+      "latency_ms": 11375.0
+    },
+    {
+      "tc_id": "TC-33",
+      "route": "SQL",
+      "latency_ms": 10250.0
+    },
+    {
+      "tc_id": "TC-34",
+      "route": "SQL",
+      "latency_ms": 18359.0
+    },
+    {
+      "tc_id": "TC-35",
+      "route": "SQL",
+      "latency_ms": 12703.0
+    },
+    {
+      "tc_id": "TC-36",
+      "route": "SQL",
+      "latency_ms": 13203.0
+    },
+    {
+      "tc_id": "TC-37",
+      "route": "SQL",
+      "latency_ms": 19563.0
+    },
+    {
+      "tc_id": "TC-38",
+      "route": "SQL",
+      "latency_ms": 12000.0
+    },
+    {
+      "tc_id": "TC-39",
+      "route": "SQL",
+      "latency_ms": 18922.0
+    },
+    {
+      "tc_id": "TC-40",
+      "route": "SQL",
+      "latency_ms": 16781.0
+    },
+    {
+      "tc_id": "TC-41",
+      "route": "SQL",
+      "latency_ms": 8563.0
+    },
+    {
+      "tc_id": "TC-42",
+      "route": "Hybrid",
+      "latency_ms": 20015.0
+    },
+    {
+      "tc_id": "TC-43",
+      "route": "Hybrid",
+      "latency_ms": 17594.0
+    },
+    {
+      "tc_id": "TC-44",
+      "route": "Hybrid",
+      "latency_ms": 15359.0
+    },
+    {
+      "tc_id": "TC-45",
+      "route": "Hybrid",
+      "latency_ms": 19250.0
+    },
+    {
+      "tc_id": "TC-46",
+      "route": "Hybrid",
+      "latency_ms": 16094.0
+    },
+    {
+      "tc_id": "TC-47",
+      "route": "Multi-Agent",
+      "latency_ms": 17906.0
+    },
+    {
+      "tc_id": "TC-50",
+      "route": "Multi-Agent",
+      "latency_ms": 16828.0
+    },
+    {
+      "tc_id": "TC-51",
+      "route": "Hybrid",
+      "latency_ms": 16282.0
+    },
+    {
+      "tc_id": "TC-52",
+      "route": "RAG",
+      "latency_ms": 10937.0
+    },
+    {
+      "tc_id": "TC-53",
+      "route": "SQL",
+      "latency_ms": 9922.0
+    },
+    {
+      "tc_id": "TC-54",
+      "route": "Multi-Agent",
+      "latency_ms": 18594.0
+    },
+    {
+      "tc_id": "TC-55",
+      "route": "RAG",
+      "latency_ms": 143500.0
+    }
+  ]
+}
