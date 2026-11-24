@@ -3,7 +3,7 @@ import time
 from typing import Literal
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from langchain_openai import AzureChatOpenAI
+from src.llm import chat_llm
 from langfuse import observe
 
 from src.graph.state import TicketState
@@ -38,13 +38,8 @@ class ClassificationResult(BaseModel):
 # is accessible for Langfuse cost tracking (SLO #14)
 # ---------------------------------------------------------------------------
 
-_structured_llm = AzureChatOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-    api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+_structured_llm = chat_llm(
     temperature=0,
-    model_kwargs={"prompt_cache_key": "langchain-prompt-caching"},
 ).with_structured_output(ClassificationResult, include_raw=True)
 
 

@@ -3,7 +3,7 @@ import time
 
 from dotenv import load_dotenv
 from langchain_core.messages import SystemMessage, HumanMessage
-from langchain_openai import AzureChatOpenAI
+from src.llm import chat_llm
 from langfuse import observe
 from pydantic import BaseModel
 
@@ -30,25 +30,15 @@ class SynthesizedResponse(BaseModel):
 # LLM singleton
 # ---------------------------------------------------------------------------
 
-_llm = AzureChatOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-    api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+_llm = chat_llm(
     temperature=0,
-    model_kwargs={"prompt_cache_key": "langchain-prompt-caching"},
 ).with_structured_output(SynthesizedResponse, include_raw=True)
 
 # Plain-text streaming LLM — used by stream_synthesizer_tokens() for SSE token streaming.
 # No structured output so tokens arrive as readable words, not JSON fragments.
-_llm_stream = AzureChatOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-    api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+_llm_stream = chat_llm(
     temperature=0,
     streaming=True,
-    model_kwargs={"prompt_cache_key": "langchain-prompt-caching"},
 )
 
 

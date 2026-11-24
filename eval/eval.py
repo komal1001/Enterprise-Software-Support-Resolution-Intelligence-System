@@ -436,7 +436,7 @@ def score_with_llm_judge(
     entirely (1.0) and relevance is judged against "did it correctly
     acknowledge the issue and escalate", not "did it resolve the ticket".
     """
-    from langchain_openai import AzureChatOpenAI
+    from src.llm import chat_llm
     from pydantic import BaseModel as _BaseModel
 
     class _JudgeOutput(_BaseModel):
@@ -444,13 +444,7 @@ def score_with_llm_judge(
         relevance:    float   # 0.0–1.0
         reasoning:    str
 
-    llm = AzureChatOpenAI(
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        temperature=0,
-    ).with_structured_output(_JudgeOutput)
+    llm = chat_llm(temperature=0).with_structured_output(_JudgeOutput)
 
     if is_escalated:
         context_section = (

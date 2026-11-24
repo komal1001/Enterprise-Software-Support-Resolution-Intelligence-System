@@ -59,8 +59,8 @@ Agent 1 — Classifier
 | Layer | Technology |
 |---|---|
 | Agent orchestration | LangGraph (StateGraph with conditional routing) |
-| LLM | Azure OpenAI GPT-4o mini |
-| Embeddings | Azure OpenAI text-embedding-3-small |
+| LLM | GPT-4o mini via OpenAI API (provider-agnostic client in `src/llm.py`) |
+| Embeddings | text-embedding-3-small (same provider) |
 | Vector DB | PostgreSQL + pgvector |
 | Structured data | PostgreSQL (parameterized queries + sqlglot validation) |
 | Document parsing | LlamaParse (multimodal — tables, images, headers) |
@@ -71,7 +71,7 @@ Agent 1 — Classifier
 | Observability | Langfuse (traces, spans, costs, RAGAS scores) |
 | Evaluation | RAGAS (faithfulness, answer relevance, context precision) |
 | Rate limiting | slowapi (10 req/min per IP) |
-| Deployment | Railway (backend) + Vercel (frontend) + Neon (PostgreSQL) |
+| Deployment | Render (backend) + Vercel (frontend) + Neon (PostgreSQL) |
 
 ---
 
@@ -220,6 +220,15 @@ database/
 
 ---
 
+## TODO
+
+- [ ] Review the saved LoRA document in the Documents and tracker folder before implementation.
+- [ ] Add LoRA adapter for reply-format control to standardize final response structure and tone.
+- [ ] Evaluate whether the adapter should enforce strict answer schema, citation style, or escalation formatting.
+- [ ] Measure impact on latency, cost, and response consistency before production rollout.
+
+---
+
 ## Running Locally
 
 **Prerequisites:** Python 3.12, Node 18+, PostgreSQL 16 with pgvector
@@ -230,7 +239,7 @@ pip install -r requirements.txt
 
 # 2. Set environment variables
 cp .env.example .env
-# Fill in: Azure OpenAI, PostgreSQL, Langfuse, LlamaCloud, Auth0
+# Fill in: OpenAI API key, PostgreSQL, Langfuse, LlamaCloud, Auth0
 
 # 3. Set up database
 psql -U postgres -c "CREATE DATABASE support_intelligence;"
@@ -253,9 +262,11 @@ cd frontend-react && npm install && npm run dev
 
 | Service | Platform |
 |---|---|
-| Backend API | Railway (auto-deploy from GitHub) |
+| Backend API | Render free tier, Docker (`render.yaml` Blueprint, auto-deploy from GitHub) |
 | Frontend | Vercel (auto-deploy from GitHub) |
 | PostgreSQL + pgvector | Neon (serverless, never pauses) |
+
+Why this stack replaced Railway + Azure OpenAI in Nov 2026, and every alternative considered: [docs/deployment-migration-2026-11.md](docs/deployment-migration-2026-11.md).
 
 ---
 

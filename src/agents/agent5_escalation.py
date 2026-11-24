@@ -4,7 +4,7 @@ import uuid
 from typing import Literal
 
 from dotenv import load_dotenv
-from langchain_openai import AzureChatOpenAI
+from src.llm import chat_llm
 from langfuse import observe
 from pydantic import BaseModel
 
@@ -127,13 +127,8 @@ class EscalationSummary(BaseModel):
 # LLM singleton
 # ---------------------------------------------------------------------------
 
-_llm = AzureChatOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-    api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+_llm = chat_llm(
     temperature=0,
-    model_kwargs={"prompt_cache_key": "langchain-prompt-caching"},
 ).with_structured_output(EscalationSummary, include_raw=True)
 
 

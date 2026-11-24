@@ -1,9 +1,9 @@
 """
-RAGAS-style evaluation metrics implemented on Azure OpenAI.
+RAGAS-style evaluation metrics implemented on the project's LLM provider (src/llm.py).
 
 The installed ragas==0.4.3 package has a broken VertexAI import (ADR-006 note).
 This module reimplements the three key RAGAS metrics directly, using the project's
-existing Azure deployment — no ragas package dependency.
+existing LLM client — no ragas package dependency.
 
 Metrics:
   faithfulness       (SLO #2  >= 0.95) — statement-level grounding check
@@ -31,7 +31,9 @@ from typing import Optional
 
 from dotenv import load_dotenv
 from pydantic import BaseModel
-from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+
+from src.llm import chat_llm, langchain_embeddings
 
 load_dotenv()
 
@@ -40,24 +42,12 @@ load_dotenv()
 # Shared LLM / embed builders (stateless — called fresh per evaluation)
 # ---------------------------------------------------------------------------
 
-def _llm() -> AzureChatOpenAI:
-    return AzureChatOpenAI(
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        temperature=0,
-        model_kwargs={"prompt_cache_key": "langchain-prompt-caching"},
-    )
+def _llm() -> ChatOpenAI:
+    return chat_llm(temperature=0)
 
 
-def _embed() -> AzureOpenAIEmbeddings:
-    return AzureOpenAIEmbeddings(
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_deployment=os.environ["AZURE_OPENAI_EMBEDDING_DEPLOYMENT"],
-        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-    )
+def _embed() -> OpenAIEmbeddings:
+    return langchain_embeddings()
 
 
 def _cosine(a: list[float], b: list[float]) -> float:

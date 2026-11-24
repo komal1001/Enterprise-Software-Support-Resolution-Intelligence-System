@@ -1,0 +1,41 @@
+# Render Blueprint — backend API on the free plan.
+# Render → New → Blueprint → pick this repo. Values marked sync: false are
+# asked for in the dashboard once (copy them from your local .env).
+services:
+  - type: web
+    name: support-resolution-api
+    runtime: docker
+    plan: free
+    # Same region as the Neon database (us-east-1): each ticket makes several DB
+    # round-trips, so server↔DB distance matters far more than user↔server.
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: LLM_BASE_URL
+        value: https://api.openai.com/v1
+      - key: LLM_API_KEY
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_PORT
+        value: "5432"
+      - key: POSTGRES_DB
+        sync: false
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: LANGFUSE_PUBLIC_KEY
+        sync: false
+      - key: LANGFUSE_SECRET_KEY
+        sync: false
+      - key: LANGFUSE_HOST
+        value: https://cloud.langfuse.com
+      - key: AUTH0_DOMAIN
+        sync: false
+      - key: AUTH0_API_AUDIENCE
+        sync: false
+      - key: LLAMA_CLOUD_API_KEY
+        sync: false

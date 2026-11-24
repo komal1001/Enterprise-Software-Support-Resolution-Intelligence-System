@@ -31,23 +31,14 @@ from llama_index.core import VectorStoreIndex, StorageContext, Settings
 from llama_index.core.schema import TextNode, NodeWithScore
 from llama_index.core.retrievers import BaseRetriever, QueryFusionRetriever
 from llama_index.vector_stores.postgres import PGVectorStore
-from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
-from llama_index.llms.azure_openai import AzureOpenAI as _LlamaAzureOpenAI
+from src.llm import CompatEmbedding
 
 load_dotenv()
 
-# Point LlamaIndex at our Azure deployment so it never falls back to the
-# default OpenAI() client (which requires OPENAI_API_KEY).
-# num_queries=1 in QueryFusionRetriever means this LLM is never actually
-# called — but Settings.llm must be set to a real client to suppress
-# "using mock llm" warnings and avoid KeyError on startup.
-Settings.llm = _LlamaAzureOpenAI(
-    model="gpt-4o-mini",
-    deployment_name=os.environ.get("AZURE_OPENAI_DEPLOYMENT", ""),
-    azure_endpoint=os.environ.get("AZURE_OPENAI_ENDPOINT", ""),
-    api_key=os.environ.get("AZURE_OPENAI_API_KEY", ""),
-    api_version=os.environ.get("AZURE_OPENAI_API_VERSION", ""),
-)
+# num_queries=1 in QueryFusionRetriever means LlamaIndex never calls an LLM.
+# None makes it use MockLLM instead of silently building a default OpenAI()
+# client that would require OPENAI_API_KEY.
+Settings.llm = None
 
 load_dotenv()
 
@@ -70,10 +61,10 @@ _nodes:      Optional[List[TextNode]] = None
 _nodes_lock  = threading.Lock()
 
 # Global embedding model singleton — shared across threads (stateless, thread-safe).
-# Avoids recreating AzureOpenAIEmbedding on every retrieve() call.
+# Avoids recreating the embedding client on every retrieve() call.
 # Used to embed the query ONCE, then reuse the vector for both semantic cache
 # lookup and pgvector retrieval (prevents double embedding API call on cache miss).
-_embed_model_singleton: Optional[AzureOpenAIEmbedding] = None
+_embed_model_singleton: Optional[CompatEmbedding] = None
 _embed_model_lock       = threading.Lock()
 
 # VectorStoreIndex is stored per-thread (not global) because PGVectorStore uses
@@ -112,7 +103,7 @@ def _build_vector_store() -> PGVectorStore:
     )
 
 
-def _get_embed_model() -> AzureOpenAIEmbedding:
+def _get_embed_model() -> CompatEmbedding:
     """Return the global embedding model singleton — built once, reused across all threads."""
     global _embed_model_singleton
     if _embed_model_singleton is None:
@@ -122,14 +113,8 @@ def _get_embed_model() -> AzureOpenAIEmbedding:
     return _embed_model_singleton
 
 
-def _build_embed_model() -> AzureOpenAIEmbedding:
-    return AzureOpenAIEmbedding(
-        model="text-embedding-3-small",
-        deployment_name=os.environ["AZURE_OPENAI_EMBEDDING_DEPLOYMENT"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    )
+def _build_embed_model() -> CompatEmbedding:
+    return CompatEmbedding()
 
 
 def _load_nodes() -> List[TextNode]:

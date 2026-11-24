@@ -1,0 +1,12 @@
+.env
+.git
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.coverage
+.claude
+frontend-react
+eval
+tests
+database
+diagrams and tracker

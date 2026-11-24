@@ -9,7 +9,7 @@ import psycopg2.pool
 import sqlglot
 import sqlglot.expressions as exp
 from dotenv import load_dotenv
-from langchain_openai import AzureChatOpenAI
+from src.llm import chat_llm
 from pydantic import BaseModel
 
 load_dotenv()
@@ -128,13 +128,8 @@ class GeneratedQuery(BaseModel):
 
 
 # include_raw=True preserves usage_metadata for Langfuse cost tracking (SLO #14)
-_llm = AzureChatOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-    api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+_llm = chat_llm(
     temperature=0,
-    model_kwargs={"prompt_cache_key": "langchain-prompt-caching"},
 ).with_structured_output(GeneratedQuery, include_raw=True)
 
 
