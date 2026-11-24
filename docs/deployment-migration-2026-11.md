@@ -205,8 +205,8 @@ Renewal steps:
 |---|---|---|---|
 | 1 | Create OpenAI account, add $5 credit (auto-recharge OFF, monthly limit), create API key, put it in `.env` as `LLM_API_KEY` | Komal | Done 2026-11-24 |
 | 2 | Live test: chat, structured output, streaming, embeddings (1536 dims), real pgvector search on Neon, full tickets | Claude | Done 2026-11-24 — see §4.5 |
-| 3 | Commit and push to GitHub | Claude (on approval) | Pending |
-| 4 | Render → New → Blueprint → select repo, fill secrets (incl. `AUTH0_DOMAIN`, `AUTH0_API_AUDIENCE` from Auth0/Railway) | Komal | Pending |
+| 3 | Commit and push to GitHub | Claude (on approval) | Done 2026-11-24 (commit 17c1df3) |
+| 4 | Render → New → Blueprint → select repo, fill secrets (incl. `AUTH0_DOMAIN`, `AUTH0_API_AUDIENCE` from Auth0/Railway) | Komal | Done 2026-11-24 — live at https://support-resolution-api.onrender.com; verified `/health` 200, PDFs served, CORS allows the Vercel origin, unauthenticated `/ticket/stream` → 401 (RBAC enforced) |
 | 5 | Vercel: set `VITE_API_URL` to the Render URL, redeploy (Vite bakes it in at build time) | Komal | Pending |
 | 6 | Delete the unused GitHub fine-grained token | Komal | Pending |
 | 7 | Optional: `/health` uptime pinger, frontend "waking up" message, delete `railway.toml` | Claude | Pending |
