@@ -106,7 +106,7 @@ def _validate_ticket(body: TicketRequest):
 def submit_ticket(
     request: Request,
     body: TicketRequest,
-    user: dict = Depends(require_role("l1-agent", "manager", "admin")),
+    user: dict = Depends(require_role("l1-agent", "manager", "support_admin")),
 ):
     _validate_ticket(body)
 
@@ -193,7 +193,7 @@ def submit_ticket(
 async def submit_ticket_stream(
     request: Request,
     body: TicketRequest,
-    user: dict = Depends(require_role("l1-agent", "manager", "admin")),
+    user: dict = Depends(require_role("l1-agent", "manager", "support_admin")),
 ):
     _validate_ticket(body)
 

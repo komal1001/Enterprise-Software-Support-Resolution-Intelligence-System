@@ -83,11 +83,11 @@ def require_role(*roles: str):
 
     Usage:
         @router.get("/admin-only")
-        def admin_endpoint(user: dict = Depends(require_role("admin"))):
+        def admin_endpoint(user: dict = Depends(require_role("support_admin"))):
             ...
 
         @router.get("/managers-and-admins")
-        def manager_endpoint(user: dict = Depends(require_role("manager", "admin"))):
+        def manager_endpoint(user: dict = Depends(require_role("manager", "support_admin"))):
             ...
     """
     def dependency(user: dict = Depends(get_current_user)) -> dict:

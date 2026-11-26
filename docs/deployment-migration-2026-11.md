@@ -150,7 +150,9 @@ It exposes three builders:
 - **`.dockerignore`** (new) — keeps `.env`, frontend, eval, tests, database scripts out of the image.
 - **`render.yaml`** (new) — Render Blueprint: free plan, Docker runtime, `/health` health check,
   auto-deploy on push. Secrets are `sync: false`, so Render asks for them once in the dashboard.
-- `railway.toml` — left in place for now; obsolete.
+- `railway.toml` — deleted (2026-11-26). Remaining Azure/Railway wording in code comments, README,
+  CLAUDE.md and test error strings updated; mentions that describe past decisions (ADR-013,
+  ADR-016, Sprint 4 checklist, this record) are kept as history.
 - Hugging Face deploy script — written, then deleted once Docker Spaces turned out to be paid.
 
 ### 4.4 Verification so far
@@ -224,6 +226,11 @@ README: `demo.manager@example.com` / `Hello@1234`, role **manager**.
 | Role manager, not admin | Shows the Escalations tab (the most interesting part of the demo) without admin powers. |
 | Document upload (`POST /admin/ingest`) changed from manager+admin to **admin only**; Knowledge Base tab hidden for non-admins | A public manager login could otherwise upload arbitrary PDFs into the shared knowledge base — corrupting answers for every visitor and spending LlamaParse/embedding credit. |
 | Password reused nowhere else | It is public. |
+| Admin role renamed in code from `admin` to **`support_admin`** | The Auth0 tenant is shared with a separate real-estate assistant project, and Auth0 roles are tenant-wide. `admin` belonged to that project, so anyone given admin there would have had admin here too. `l1-agent` and `manager` were already specific to this project; `support_admin` already existed in Auth0 unused. The frontend also now picks the highest of this app's roles from the token instead of `roles[0]`, because a user can carry roles from both projects in any order. |
+
+**On hold:** a second demo login with the `l1-agent` role (e.g. `demo.agent@example.com`) to
+show the RBAC difference live (no Escalations tab for L1). Not needed for the public demo; one
+manager account is simpler and shows more.
 
 Abuse/cost limits already in place: slowapi 10 tickets/minute per IP, and the OpenAI monthly
 budget limit on the prepaid balance.

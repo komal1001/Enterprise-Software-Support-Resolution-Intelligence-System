@@ -188,7 +188,7 @@ class TestAgent1RetryLogic:
              patch("src.observability.langfuse_client.get_langfuse", return_value=MagicMock()), \
              patch("src.observability.langfuse_client.calculate_cost", return_value=0.0001), \
              patch("time.sleep"):
-            mock_llm.invoke.side_effect = [RuntimeError("Azure timeout"), ok]
+            mock_llm.invoke.side_effect = [RuntimeError("LLM timeout"), ok]
             result = agent1_classify(state)
 
         assert result["classification"]["category"] == "integration_api"
@@ -206,7 +206,7 @@ class TestAgent1Fallback:
              patch("src.observability.langfuse_client.get_langfuse", return_value=MagicMock()), \
              patch("src.observability.langfuse_client.calculate_cost", return_value=0.0001), \
              patch("time.sleep"):
-            mock_llm.invoke.side_effect = RuntimeError("Azure is down")
+            mock_llm.invoke.side_effect = RuntimeError("LLM is down")
             result = agent1_classify(state)
 
         clf = result["classification"]

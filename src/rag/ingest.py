@@ -103,7 +103,7 @@ def ingest_documents() -> None:
     # Step 5 — save nodes to JSON so BM25Retriever can reload them at query time
     _save_nodes(final_nodes)
 
-    # Estimate embedding cost (Azure doesn't return token counts via LlamaIndex)
+    # Estimate embedding cost (LlamaIndex doesn't return embedding token counts)
     # text-embedding-3-small = $0.02 per 1M tokens, ~4 chars per token
     total_chars      = sum(len(n.text) for n in final_nodes)
     estimated_tokens = total_chars // 4

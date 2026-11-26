@@ -113,7 +113,7 @@ app.include_router(admin.router)
 # ---------------------------------------------------------------------------
 # Shutdown — flush any buffered Langfuse spans before the process exits.
 # Without this, spans from the last in-flight ticket may never reach Langfuse
-# if the process is killed (Ctrl+C, Railway/Render restart, OOM kill).
+# if the process is killed (Ctrl+C, Render restart/sleep, OOM kill).
 # ---------------------------------------------------------------------------
 
 @app.on_event("startup")

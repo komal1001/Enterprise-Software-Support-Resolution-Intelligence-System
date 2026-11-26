@@ -13,7 +13,7 @@ router = APIRouter(tags=["admin"])
 
 
 @router.get("/escalations")
-def get_escalations(user: dict = Depends(require_role("manager", "admin"))):
+def get_escalations(user: dict = Depends(require_role("manager", "support_admin"))):
     """Manager/Admin only — all escalated tickets ordered by newest first (SLO #12)."""
     import psycopg2, psycopg2.extras
     try:
@@ -51,7 +51,7 @@ async def ingest_document(
     file: UploadFile = File(...),
     # Admin only: the public demo account is a manager, and ingest permanently
     # changes the shared knowledge base and spends LlamaParse/embedding credit.
-    user: dict = Depends(require_role("admin")),
+    user: dict = Depends(require_role("support_admin")),
 ):
     """Upload a PDF or Word doc — parse, embed, and index into pgvector + BM25 (SLO #12)."""
     _ALLOWED_EXTS = {".pdf", ".docx", ".doc"}

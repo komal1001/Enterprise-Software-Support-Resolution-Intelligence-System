@@ -9,7 +9,7 @@ SQL/Hybrid/Multi-Agent routes must bypass this cache — their responses depend
 on customer account data that changes per ticket.
  are we having problem every
 How it works:
-  1. Incoming query is embedded using our Azure embedding model (same model as ingest).
+  1. Incoming query is embedded using our embedding model (src/llm.py) (same model as ingest).
   2. Cache is scanned for any stored query whose cosine similarity >= SIMILARITY_THRESHOLD.
   3. Hit  → return cached chunks immediately (~0ms, no network calls).
   4. Miss → run normal retrieve(), store (query_vector, chunks) in cache.

@@ -27,7 +27,7 @@ from langfuse import Langfuse, observe  # noqa: F401 — re-exported for agents
 
 load_dotenv()
 
-# GPT-4o mini pricing (Azure, per token)
+# GPT-4o mini pricing (OpenAI API, per token)
 _INPUT_COST_PER_TOKEN  = 0.15 / 1_000_000
 _OUTPUT_COST_PER_TOKEN = 0.60 / 1_000_000
 

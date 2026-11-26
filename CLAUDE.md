@@ -267,7 +267,7 @@ Pending (placeholder functions exist):
 | SQL DB connection | `psycopg2.connect()` on every ticket → new TCP + Neon cold start (~1-2s) | `ThreadedConnectionPool(minconn=1, maxconn=5)` — reuse open connections; auto-ping to detect stale connections | ADR-015 |
 | Langfuse prompt fetch | `lf.get_prompt()` HTTP call on every agent call × 6 agents (~300ms each = ~1.8s/ticket) | `get_cached_prompt()` in `langfuse_client.py` — fetch once per process, shared across all agents | ADR-015 |
 | RAG retriever rebuild | `QueryFusionRetriever` + BM25 rebuilt on every ticket (~200ms) | Per-thread singleton in `_thread_local`; global `_nodes` loaded once from JSON | ADR-014 |
-| LLM prefix computation | Repeated static system prompt sent to Azure on every call | Azure OpenAI automatic prefix caching (free, active for prompts > 1024 tokens) — no code needed | ADR-016 |
+| LLM prefix computation | Repeated static system prompt sent to the LLM on every call | OpenAI automatic prompt prefix caching (free, active for prompts > 1024 tokens) + `prompt_cache_key` | ADR-016 |
 | LangChain InMemoryCache | Would cache complete LLM responses for identical inputs | **Rejected** — hit rate ~0% on unique support tickets; semantic cache also rejected (safety risk: could return cached answer for wrong customer) | ADR-016 |
 | Neon cold start on startup | First ticket after server start hits unwarmed Neon compute (~10-30s) | Startup warmup ping in `main.py` `@app.on_event("startup")` — wakes Neon before first ticket arrives | ADR-012 |
 | RAG embedding + pgvector search | Embedding API call + pgvector ANN search + BM25 on every RAG ticket (~500ms) | `semantic_cache.py` — cosine similarity >= 0.92 against cached query vectors returns chunks instantly. RAG-only route only; Hybrid/Multi-Agent bypass cache (customer-specific context). pgvector index deferred — see ADR-018. | ADR-017, ADR-018 |
@@ -331,7 +331,7 @@ Changes made this sprint:
   Industry pattern: diverse model ensemble — cheaper model for high-volume Agent 1 classification,
   stronger model for low-volume but high-stakes Agent 4 re-assessment.
   Trade-off: GPT-4o full is ~15x more expensive per token — only justified for Agent 4, not Agent 1.
-  Implementation: add AZURE_OPENAI_DEPLOYMENT_AGENT4 env var, update _llm in agent4_severity.py.
+  Implementation: add an LLM_CHAT_MODEL_AGENT4 env var (e.g. gpt-4o), pass model= to chat_llm() in agent4_severity.py.
   Cost impact: Agent 4 runs on every ticket — monitor SLO #14 ($0.05 avg, $0.15 hard cap).
 
 ## Sprint 7 Notes

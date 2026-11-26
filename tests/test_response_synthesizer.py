@@ -248,7 +248,7 @@ class TestResponseSynthesizerRetryFallback:
              patch("src.observability.langfuse_client.get_langfuse", return_value=MagicMock()), \
              patch("src.observability.langfuse_client.calculate_cost", return_value=0.0001), \
              patch("time.sleep"):
-            mock_llm.invoke.side_effect = RuntimeError("Azure is down")
+            mock_llm.invoke.side_effect = RuntimeError("LLM is down")
             result = response_synthesizer(state)
 
         assert result["final_response"] is not None

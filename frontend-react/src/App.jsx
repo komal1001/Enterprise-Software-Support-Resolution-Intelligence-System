@@ -17,6 +17,9 @@ const DEFAULT_STATS = {
 };
 
 const ROLES_CLAIM = 'https://support-resolution-api/roles';
+// The Auth0 tenant is shared with another project, so the token can carry
+// roles this app doesn't know (e.g. 'admin', 'user'). Pick the highest of ours.
+const APP_ROLES = ['support_admin', 'manager', 'l1-agent'];
 
 export default function App() {
   const { isAuthenticated, isLoading, user, logout, getAccessTokenSilently } = useAuth0();
@@ -31,7 +34,7 @@ export default function App() {
       .then(token => {
         const payload = JSON.parse(atob(token.split('.')[1]));
         const roles   = payload[ROLES_CLAIM] || [];
-        setUserRole(roles[0] || 'l1-agent');
+        setUserRole(APP_ROLES.find(r => roles.includes(r)) || 'l1-agent');
       })
       .catch(() => setUserRole('l1-agent'));
   }, [isAuthenticated, getAccessTokenSilently]);
@@ -77,7 +80,7 @@ export default function App() {
               <h2>Support Ticket Portal</h2>
               <p>Describe your issue. The AI system classifies, retrieves context, assesses severity, and responds.</p>
             </div>
-            {(userRole === 'admin' || userRole === 'manager') && (
+            {(userRole === 'support_admin' || userRole === 'manager') && (
               <nav className="tab-nav">
                 <button
                   className={`tab-btn ${activeTab === 'chat' ? 'active' : ''}`}
@@ -87,7 +90,7 @@ export default function App() {
                   className={`tab-btn ${activeTab === 'escalations' ? 'active' : ''}`}
                   onClick={() => setActiveTab('escalations')}
                 >Escalations</button>
-                {userRole === 'admin' && (
+                {userRole === 'support_admin' && (
                   <button
                     className={`tab-btn ${activeTab === 'ingest' ? 'active' : ''}`}
                     onClick={() => setActiveTab('ingest')}
@@ -107,7 +110,7 @@ export default function App() {
           />
         )}
         {activeTab === 'escalations' && <EscalationsTab />}
-        {activeTab === 'ingest' && userRole === 'admin' && <IngestTab />}
+        {activeTab === 'ingest' && userRole === 'support_admin' && <IngestTab />}
       </main>
     </div>
   );

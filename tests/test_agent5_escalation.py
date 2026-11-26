@@ -239,7 +239,7 @@ class TestAgent5EscalationNode:
              patch("src.agents.agent5_escalation._fetch_incident_logs", return_value=[]), \
              patch("src.integrations.jira_client.create_jira_issue", return_value=None), \
              patch("time.sleep"):
-            mock_llm.invoke.side_effect = RuntimeError("Azure down")
+            mock_llm.invoke.side_effect = RuntimeError("LLM down")
             result = agent5_escalation(state)
 
         pkg = result["escalation_package"]

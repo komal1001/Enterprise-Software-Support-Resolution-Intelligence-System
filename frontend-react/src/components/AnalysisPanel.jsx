@@ -92,7 +92,7 @@ export default function AnalysisPanel({ response, role, agentSteps = [] }) {
       {isEscalated && (
         <div className="escalation-alert">
           🚨 Escalated — routed to human team for review
-          {jiraKey && (role === 'manager' || role === 'admin') && (
+          {jiraKey && (role === 'manager' || role === 'support_admin') && (
             <span style={{ marginLeft: 12 }}>
               |{' '}
               <a href={jiraUrl} target="_blank" rel="noopener noreferrer"

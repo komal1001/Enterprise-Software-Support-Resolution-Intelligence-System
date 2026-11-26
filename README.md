@@ -69,7 +69,7 @@ Agent 1 — Classifier
 | API | FastAPI + Uvicorn |
 | Streaming | Server-Sent Events (SSE) via sse-starlette |
 | Frontend | React + Vite |
-| Auth | Auth0 JWT + RBAC (l1-agent / manager / admin) |
+| Auth | Auth0 JWT + RBAC (l1-agent / manager / support_admin) |
 | Observability | Langfuse (traces, spans, costs, RAGAS scores) |
 | Evaluation | RAGAS (faithfulness, answer relevance, context precision) |
 | Rate limiting | slowapi (10 req/min per IP) |
@@ -123,8 +123,10 @@ Assembles a full context package: ticket history, account data, incident logs (l
 
 **RBAC**
 - `l1-agent` — submit tickets
-- `manager` — view escalations, ingest documents
-- `admin` — full access
+- `manager` — submit tickets, view escalations (the public demo account)
+- `support_admin` — full access, including document ingest
+
+Roles are project-specific (`support_admin`, not `admin`) because the Auth0 tenant is shared with another app.
 
 **Online document ingestion**
 - Upload PDF or Word (.docx/.doc) via Knowledge Base tab
@@ -133,7 +135,7 @@ Assembles a full context package: ticket history, account data, incident logs (l
 **Observability**
 - Every ticket creates a Langfuse trace with child spans per agent
 - Token counts, cost, latency, RAGAS scores attached to each trace
-- Azure OpenAI prefix caching for system prompts > 1024 tokens
+- OpenAI prompt prefix caching for system prompts > 1024 tokens
 
 ---
 
@@ -215,10 +217,10 @@ database/
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
 | GET | `/health` | None | Liveness probe |
-| GET | `/escalations` | manager / admin | All escalated tickets |
+| GET | `/escalations` | manager / support_admin | All escalated tickets |
 | POST | `/ticket` | all roles | Synchronous ticket submission |
 | POST | `/ticket/stream` | all roles | SSE streaming (used by UI) |
-| POST | `/admin/ingest` | manager / admin | Upload PDF/Word to knowledge base |
+| POST | `/admin/ingest` | support_admin | Upload PDF/Word to knowledge base |
 
 ---
 

@@ -310,7 +310,7 @@ class TestAgent4RetryLogic:
              patch("src.observability.langfuse_client.get_langfuse", return_value=MagicMock()), \
              patch("src.observability.langfuse_client.calculate_cost", return_value=0.0001), \
              patch("time.sleep"):
-            mock_llm.invoke.side_effect = [RuntimeError("Azure timeout"), ok]
+            mock_llm.invoke.side_effect = [RuntimeError("LLM timeout"), ok]
             result = agent4_severity(state)
 
         assert result["severity_assessment"] is not None
@@ -329,7 +329,7 @@ class TestAgent4Fallback:
              patch("src.observability.langfuse_client.get_langfuse", return_value=MagicMock()), \
              patch("src.observability.langfuse_client.calculate_cost", return_value=0.0001), \
              patch("time.sleep"):
-            mock_llm.invoke.side_effect = RuntimeError("Azure is down")
+            mock_llm.invoke.side_effect = RuntimeError("LLM is down")
             result = agent4_severity(state)
 
         sa = result["severity_assessment"]

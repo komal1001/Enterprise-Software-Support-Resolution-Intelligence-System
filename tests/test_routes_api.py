@@ -224,7 +224,7 @@ class TestEscalationsEndpoint:
         def manager_dep(user: dict = __import__('fastapi').Depends(get_current_user)):
             return user
 
-        app.dependency_overrides[require_role("manager", "admin")] = manager_dep
+        app.dependency_overrides[require_role("manager", "support_admin")] = manager_dep
 
         with patch("psycopg2.connect") as mock_conn:
             mock_cursor = MagicMock()
