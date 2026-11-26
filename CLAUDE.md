@@ -307,6 +307,14 @@ Changes made this sprint:
 - `src/api/routes.py`: `_AGENT_TIMEOUT = 50s` (was 25s) — covers Neon cold start + LLM calls
 - `frontend-react/src/utils/api.js`: Frontend timeout raised to 60s; user-friendly error messages
 
+**Demo UX for the hiring team (Nov 2026):**
+- `ScenarioCards.jsx`: one-click scenarios (RAG, SQL, Hybrid, Multi-Agent, prompt-injection attack) on the empty chat, chips after the first answer. Each scenario text was verified to route as labelled.
+- `ThinkingTrace.jsx` + `_thinking()` in `routes/tickets.py`: each agent's stated reasoning and intermediate outputs (classifier rationale, generated SQL, rewritten RAG query + top passages, severity decision, escalation team/actions) streamed in SSE `status` events as `thinking`, shown live and kept above the latest answer. Agent 5 now emits a second status event after it runs.
+- `GuardrailCard.jsx`: guardrail 400s now return `detail = {blocked_by, reason, message}`; UI shows which guardrail fired.
+- `SourceChips.jsx`: citations (PDFs + "Account database" for SQL routes) always visible under each answer.
+- `ServerWakeBanner.jsx`: pings `/health` on load and explains Render free-tier cold starts.
+- `start_frontend.bat` runs `node node_modules\vite\bin\vite.js` — npm/npx `.cmd` launchers break on the `&` in this folder path.
+
 **Frontend UX:**
 - `frontend-react/src/components/ChatWindow.jsx`: Analysis panel moved above response bubble; collapsible via `<details>` showing `severity · route · confidence` summary line
 - `frontend-react/src/components/AnalysisPanel.jsx`: Agent 4 severity re-assessment reasoning + escalation trigger displayed; sources rendered as clickable PDF links (`http://localhost:8000/docs/<filename>`)

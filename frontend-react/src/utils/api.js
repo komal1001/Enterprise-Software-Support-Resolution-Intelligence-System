@@ -27,6 +27,7 @@ export async function submitTicketStream(
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({ detail: 'Unknown error' }));
+      // Guardrail blocks arrive as { blocked_by, reason, message }; everything else is a string.
       onError(err.detail || 'Request failed');
       return;
     }

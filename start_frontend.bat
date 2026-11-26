@@ -1,2 +1,6 @@
 @echo off
-powershell -NoExit -Command "cd '%~dp0frontend-react'; npm run dev"
+rem Runs Vite through node directly: npm/npx .cmd launchers break on the "&"
+rem in this folder's path ("Support & Resolution").
+cd /d "%~dp0frontend-react"
+node node_modules\vite\bin\vite.js
+pause

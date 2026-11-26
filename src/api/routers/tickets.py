@@ -83,6 +83,59 @@ def _build_initial_state(body: TicketRequest) -> TicketState:
     }
 
 
+def _thinking(node_name: str, node_state: dict, merged_state: dict) -> dict:
+    """
+    Each agent's own stated rationale and key intermediate outputs, streamed to
+    the UI's live reasoning trace. These are the agents' structured outputs
+    (reasoning fields, generated SQL, rewritten query), not hidden model tokens.
+    """
+    if node_name == "agent1_classify":
+        clf = node_state.get("classification") or {}
+        return {"reasoning": clf.get("reasoning", "")}
+    if node_name == "agent3_sql":
+        sql = node_state.get("sql_result") or {}
+        return {
+            "intent":    sql.get("query_intent", ""),
+            "sql":       (sql.get("sql_query") or "")[:1500],
+            "row_count": sql.get("row_count", 0),
+            "error":     str(sql["error"])[:200] if sql.get("error") else None,
+        }
+    if node_name == "agent2_rag":
+        rag = node_state.get("rag_result") or {}
+        return {
+            "query": rag.get("query", ""),
+            "top": [
+                {
+                    "source":  c.get("source", ""),
+                    "page":    c.get("page"),
+                    "score":   round(float(c.get("score") or 0), 3),
+                    "snippet": " ".join((c.get("text") or "").split())[:180],
+                }
+                for c in (rag.get("chunks") or [])[:3]
+            ],
+        }
+    if node_name == "agent4_severity":
+        sev = node_state.get("severity_assessment") or {}
+        clf = merged_state.get("classification") or {}
+        return {
+            "initial_severity": clf.get("severity", ""),
+            "confidence":       sev.get("confidence"),
+            "reasoning":        sev.get("reasoning", ""),
+            "trigger":          sev.get("escalation_trigger"),
+            "reretrieve":       bool(sev.get("needs_reretrieval")),
+        }
+    if node_name == "agent5_escalation":
+        pkg = merged_state.get("escalation_package") or {}
+        return {
+            "team":         pkg.get("escalation_team") or pkg.get("team"),
+            "priority":     pkg.get("priority"),
+            "reference_id": pkg.get("reference_id"),
+            "trigger":      pkg.get("escalation_trigger"),
+            "actions":      (pkg.get("recommended_actions") or [])[:3],
+        }
+    return {}
+
+
 def _validate_ticket(body: TicketRequest):
     if not body.ticket_text.strip():
         raise HTTPException(status_code=400, detail="ticket_text cannot be empty")
@@ -93,8 +146,13 @@ def _validate_ticket(body: TicketRequest):
         )
     guardrail = check_guardrails(body.ticket_text)
     if guardrail.blocked:
-        log_guardrail_block(body.ticket_text, guardrail.reason.value if guardrail.reason else "unknown")
-        raise HTTPException(status_code=400, detail=guardrail.message)
+        reason = guardrail.reason.value if guardrail.reason else "unknown"
+        log_guardrail_block(body.ticket_text, reason)
+        # Structured so the UI can show which guardrail fired (SLO #13 demo).
+        raise HTTPException(
+            status_code=400,
+            detail={"blocked_by": "guardrail", "reason": reason, "message": guardrail.message},
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -300,7 +358,8 @@ async def submit_ticket_stream(
                     event_data["escalate"] = sev.get("escalate", False)
                     event_data["severity"] = sev.get("severity", "")
 
-                yield {"event": "status", "data": json.dumps(event_data)}
+                event_data["thinking"] = _thinking(node_name, node_state, merged_state)
+                yield {"event": "status", "data": json.dumps(event_data, default=str)}
 
             # ── Phase 2: escalation OR token streaming ────────────────────────
             severity_assessment = merged_state.get("severity_assessment") or {}
@@ -318,6 +377,10 @@ async def submit_ticket_stream(
                     "step": "agent5_escalation", "message": _NODE_LABELS["agent5_escalation"],
                 })}
                 merged_state   = await asyncio.to_thread(agent5_escalation, merged_state)
+                yield {"event": "status", "data": json.dumps({
+                    "step": "agent5_escalation", "message": "Handoff package assembled",
+                    "thinking": _thinking("agent5_escalation", {}, merged_state),
+                }, default=str)}
                 final_response = merged_state.get("final_response") or (
                     "Your ticket has been escalated to our support team. "
                     "A specialist will contact you within the SLA window."

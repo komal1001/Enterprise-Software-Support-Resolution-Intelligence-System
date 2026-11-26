@@ -4,6 +4,13 @@ import ReactMarkdown from 'react-markdown';
 import { submitTicketStream } from '../utils/api';
 import AnalysisPanel from './AnalysisPanel';
 import PipelineFlow from './PipelineFlow';
+import ScenarioCards, { ScenarioChips } from './ScenarioCards';
+import GuardrailCard from './GuardrailCard';
+import ServerWakeBanner from './ServerWakeBanner';
+import SourceChips from './SourceChips';
+import ThinkingTrace from './ThinkingTrace';
+
+const SLOW_HINT_MS = 8000;
 
 const BASE_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/docs`;
 
@@ -45,6 +52,7 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
   const [error,          setError]          = useState('');
   const [agentSteps,     setAgentSteps]     = useState([]);
   const [pipelineDone,   setPipelineDone]   = useState(false);
+  const [slowHint,       setSlowHint]       = useState(false);
   const agentStepsRef    = useRef([]);
   const streamingTextRef = useRef('');
   const bottomRef        = useRef(null);
@@ -53,9 +61,19 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading, status, streamingText]);
 
-  async function handleSubmit(e) {
+  // No agent has reported yet after a few seconds → most likely a cold start.
+  useEffect(() => {
+    if (!loading || agentSteps.length > 0) { setSlowHint(false); return; }
+    const t = setTimeout(() => setSlowHint(true), SLOW_HINT_MS);
+    return () => clearTimeout(t);
+  }, [loading, agentSteps.length]);
+
+  function handleSubmit(e) {
     e.preventDefault();
-    const text = input.trim();
+    submitText(input.trim());
+  }
+
+  async function submitText(text) {
     if (!text || loading) return;
 
     setInput('');
@@ -113,6 +131,11 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
         setStatus('');
         setStreamingText('');
         setLoading(false);
+        if (errMsg && typeof errMsg === 'object' && errMsg.blocked_by === 'guardrail') {
+          setMessages(prev => [...prev, { role: 'blocked', reason: errMsg.reason, content: errMsg.message }]);
+          return;
+        }
+        if (typeof errMsg === 'object') errMsg = errMsg?.message || JSON.stringify(errMsg);
         if (errMsg?.includes('guardrail') || errMsg?.includes('Blocked') || errMsg?.includes('blocked')) {
           setError('Blocked by security guardrails. Please submit a valid support ticket.');
         } else if (errMsg?.includes('Too many')) {
@@ -138,24 +161,39 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
     );
   }
 
+  const lastAssistantIdx = messages.map(m => m.role).lastIndexOf('assistant');
+
   return (
     <div className="chat-window">
       <div className="messages">
+        <ServerWakeBanner />
+
         {messages.length === 0 && (
-          <div className="empty-state">
-            <p>Welcome, {user.name}.</p>
-            <p>Describe your issue below and the AI system will triage it automatically.</p>
+          <div className="empty-state scenario-intro">
+            <p className="scenario-welcome">Welcome, {user.name}.</p>
+            <p>Pick a scenario to watch the agents work — or describe your own issue below.</p>
+            <ScenarioCards onPick={submitText} disabled={loading} />
           </div>
         )}
 
-        {messages.map((msg, i) => (
+        {messages.map((msg, i) => msg.role === 'blocked' ? (
+          <div key={i} className="message assistant">
+            <GuardrailCard reason={msg.reason} message={msg.content} />
+          </div>
+        ) : (
           <div key={i} className={`message ${msg.role}`}>
+            {msg.role === 'assistant' && (msg.agentSteps || []).some(s => s.thinking) && (
+              <details className="thinking-toggle" open={i === lastAssistantIdx}>
+                <summary className="thinking-toggle-summary">🧠 Agent reasoning — what each agent decided and why</summary>
+                <ThinkingTrace steps={msg.agentSteps} />
+              </details>
+            )}
             {msg.role === 'assistant' && msg.response && (
               <details className="analysis-toggle">
                 <summary className="analysis-toggle-summary">
                   {(() => {
                     const clf = msg.response.classification || {};
-                    return `${clf.severity || ''} · ${clf.routing_path || ''} · ${Math.round((clf.confidence || 0) * 100)}% confidence — click to expand`;
+                    return `📊 Quality scores & pipeline details — ${clf.severity || ''} · ${clf.routing_path || ''} route · ${Math.round((clf.confidence || 0) * 100)}% confidence`;
                   })()}
                 </summary>
                 <AnalysisPanel
@@ -168,6 +206,7 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
             <div className="bubble markdown-body">
               <ReactMarkdown components={MD_COMPONENTS}>{linkifySources(msg.content)}</ReactMarkdown>
             </div>
+            {msg.role === 'assistant' && <SourceChips response={msg.response} />}
           </div>
         ))}
 
@@ -177,6 +216,7 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
             {agentSteps.length > 0 && (
               <div className="pipeline-live-panel">
                 <PipelineFlow steps={agentSteps} done={pipelineDone} />
+                <ThinkingTrace steps={agentSteps} live={!streamingText} />
               </div>
             )}
             <div className={`bubble ${streamingText ? '' : 'loading'}`}>
@@ -185,6 +225,9 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
                 : <><span className="dot" /><span className="dot" /><span className="dot" /></>
               }
             </div>
+            {slowHint && (
+              <p className="slow-hint">Still working — the first request after the server has been idle can take up to a minute.</p>
+            )}
           </div>
         )}
 
@@ -197,6 +240,8 @@ export default function ChatWindow({ user, threadId, onTicketComplete }) {
         {error && <div className="error-banner">{error}</div>}
         <div ref={bottomRef} />
       </div>
+
+      {messages.length > 0 && <ScenarioChips onPick={submitText} disabled={loading} />}
 
       <form className="input-bar" onSubmit={handleSubmit}>
         <textarea
