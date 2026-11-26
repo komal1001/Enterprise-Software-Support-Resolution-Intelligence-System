@@ -49,7 +49,9 @@ def get_escalations(user: dict = Depends(require_role("manager", "admin"))):
 async def ingest_document(
     request: Request,
     file: UploadFile = File(...),
-    user: dict = Depends(require_role("manager", "admin")),
+    # Admin only: the public demo account is a manager, and ingest permanently
+    # changes the shared knowledge base and spends LlamaParse/embedding credit.
+    user: dict = Depends(require_role("admin")),
 ):
     """Upload a PDF or Word doc — parse, embed, and index into pgvector + BM25 (SLO #12)."""
     _ALLOWED_EXTS = {".pdf", ".docx", ".doc"}

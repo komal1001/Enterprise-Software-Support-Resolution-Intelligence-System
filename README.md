@@ -3,6 +3,8 @@
 **Production-grade autonomous agentic AI system for enterprise SaaS support triage.**
 
 Live demo → [enterprise-software-support-resolut.vercel.app](https://enterprise-software-support-resolut.vercel.app)
+· Demo login (manager role): `demo.manager@example.com` / `Hello@1234`
+· The free backend sleeps when idle — the first request may take ~1 minute.
 
 ---
 

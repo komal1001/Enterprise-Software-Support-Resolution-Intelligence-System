@@ -18,10 +18,16 @@ export default function Login() {
       <div className="login-left">
         <div className="login-badge">AI · Autonomous · Enterprise</div>
         <h1 className="login-title">Enterprise Support Intelligence</h1>
-        <p className="login-sub">Autonomous AI triage built on LangGraph, Azure OpenAI, and pgvector. Classifies, retrieves, re-assesses, and responds — end to end.</p>
+        <p className="login-sub">Autonomous AI triage built on LangGraph, OpenAI, and pgvector. Classifies, retrieves, re-assesses, and responds — end to end.</p>
         <button className="login-btn" onClick={() => loginWithRedirect()} disabled={isLoading}>
           {isLoading ? 'Loading…' : 'Sign In to Portal →'}
         </button>
+        <div className="login-demo">
+          <div className="login-demo-title">Try it — demo account (manager)</div>
+          <div><span>Email</span><code>demo.manager@example.com</code></div>
+          <div><span>Password</span><code>Hello@1234</code></div>
+          <div className="login-demo-note">First request may take ~1 min while the free server wakes up.</div>
+        </div>
         <p className="login-hint">NIIT Capstone · AI Solutions Engineering</p>
       </div>
 

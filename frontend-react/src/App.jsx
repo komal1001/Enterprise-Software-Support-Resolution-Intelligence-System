@@ -87,10 +87,12 @@ export default function App() {
                   className={`tab-btn ${activeTab === 'escalations' ? 'active' : ''}`}
                   onClick={() => setActiveTab('escalations')}
                 >Escalations</button>
-                <button
-                  className={`tab-btn ${activeTab === 'ingest' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('ingest')}
-                >Knowledge Base</button>
+                {userRole === 'admin' && (
+                  <button
+                    className={`tab-btn ${activeTab === 'ingest' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('ingest')}
+                  >Knowledge Base</button>
+                )}
               </nav>
             )}
           </div>
@@ -105,7 +107,7 @@ export default function App() {
           />
         )}
         {activeTab === 'escalations' && <EscalationsTab />}
-        {activeTab === 'ingest'      && <IngestTab />}
+        {activeTab === 'ingest' && userRole === 'admin' && <IngestTab />}
       </main>
     </div>
   );

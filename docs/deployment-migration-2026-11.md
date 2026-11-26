@@ -207,9 +207,26 @@ Renewal steps:
 | 2 | Live test: chat, structured output, streaming, embeddings (1536 dims), real pgvector search on Neon, full tickets | Claude | Done 2026-11-24 — see §4.5 |
 | 3 | Commit and push to GitHub | Claude (on approval) | Done 2026-11-24 (commit 17c1df3) |
 | 4 | Render → New → Blueprint → select repo, fill secrets (incl. `AUTH0_DOMAIN`, `AUTH0_API_AUDIENCE` from Auth0/Railway) | Komal | Done 2026-11-24 — live at https://support-resolution-api.onrender.com; verified `/health` 200, PDFs served, CORS allows the Vercel origin, unauthenticated `/ticket/stream` → 401 (RBAC enforced) |
-| 5 | Vercel: set `VITE_API_URL` to the Render URL, redeploy (Vite bakes it in at build time) | Komal | Pending |
+| 5 | Point the Vercel frontend at the Render URL | Komal + Claude | Done 2026-11-24 — Vercel refused to convert the Sensitive `VITE_API_URL` dashboard variable to a plain one (and a `VITE_` value is public in the browser bundle anyway), so the dashboard variable was deleted and the URL committed in `frontend-react/.env.production` (commit 3f812b3). Verified the live bundle calls the Render URL. Logged-in end-to-end ticket test: pending |
 | 6 | Delete the unused GitHub fine-grained token | Komal | Pending |
 | 7 | Optional: `/health` uptime pinger, frontend "waking up" message, delete `railway.toml` | Claude | Pending |
+
+---
+
+## 5a. Public demo account
+
+So that recruiters can try the live app, a demo login is published on the login page and in the
+README: `demo.manager@example.com` / `Hello@1234`, role **manager**.
+
+| Decision | Why |
+|---|---|
+| Email on `example.com`, not a made-up Gmail | The demo user was first created as `support_manager@gmail.com`, an address nobody owned. Anyone could later register it, use "Forgot password", and take over the public demo account. `example.com` is reserved (RFC 2606) and can never receive mail, so password resets go nowhere. |
+| Role manager, not admin | Shows the Escalations tab (the most interesting part of the demo) without admin powers. |
+| Document upload (`POST /admin/ingest`) changed from manager+admin to **admin only**; Knowledge Base tab hidden for non-admins | A public manager login could otherwise upload arbitrary PDFs into the shared knowledge base — corrupting answers for every visitor and spending LlamaParse/embedding credit. |
+| Password reused nowhere else | It is public. |
+
+Abuse/cost limits already in place: slowapi 10 tickets/minute per IP, and the OpenAI monthly
+budget limit on the prepaid balance.
 
 ---
 
