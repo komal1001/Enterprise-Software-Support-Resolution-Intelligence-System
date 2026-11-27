@@ -383,6 +383,7 @@ Together these cover: Max queries per user/minute + Query complexity limits + Pr
 - All agents accept and return `TicketState`
 - Pydantic BaseModel with `Literal` types for all structured LLM outputs
 - Parameterized SQL only — never build query strings from user input
+- Least privilege for DB connections: code that runs LLM-generated or user-influenced SQL must log in as `POSTGRES_READER_USER` (read-only), never the owner, and must fail closed if it is missing. Only fixed, hand-written queries may use `POSTGRES_USER`. Guarded by `tests/test_db_least_privilege.py`.
 - LLM credentials always from environment variables, never hardcoded
 - Create LLM/embedding clients only via `src/llm.py` (`chat_llm`, `CompatEmbedding`, `langchain_embeddings`)
 

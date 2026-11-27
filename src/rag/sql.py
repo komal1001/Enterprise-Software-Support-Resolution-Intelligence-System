@@ -25,19 +25,39 @@ _pool: Optional[psycopg2.pool.ThreadedConnectionPool] = None
 _pool_lock = threading.Lock()
 
 
+def _reader_credentials() -> tuple[str, str]:
+    """
+    Least privilege (SLO #12): this pool runs LLM-generated SQL, so it must log
+    in as the read-only role. sqlglot validation is the first defence; the
+    database refusing writes is the second. Fails closed — never falls back to
+    the owner account, which can UPDATE/DELETE and bypasses RLS.
+    """
+    user = os.environ.get("POSTGRES_READER_USER")
+    password = os.environ.get("POSTGRES_READER_PASSWORD")
+    if not user or not password:
+        raise RuntimeError(
+            "POSTGRES_READER_USER / POSTGRES_READER_PASSWORD are not set. The SQL agent "
+            "runs LLM-generated SQL and must use the read-only database role."
+        )
+    if user == os.environ.get("POSTGRES_USER"):
+        raise RuntimeError("POSTGRES_READER_USER must be a read-only role, not the owner account.")
+    return user, password
+
+
 def _get_pool() -> psycopg2.pool.ThreadedConnectionPool:
     global _pool
     if _pool is None:
         with _pool_lock:
             if _pool is None:
+                user, password = _reader_credentials()
                 _pool = psycopg2.pool.ThreadedConnectionPool(
                     minconn=1,
                     maxconn=5,
                     host=os.environ["POSTGRES_HOST"],
                     port=int(os.environ.get("POSTGRES_PORT", 5432)),
                     dbname=os.environ["POSTGRES_DB"],
-                    user=os.environ["POSTGRES_USER"],
-                    password=os.environ["POSTGRES_PASSWORD"],
+                    user=user,
+                    password=password,
                     sslmode="require",
                 )
     return _pool
