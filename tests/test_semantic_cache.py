@@ -7,8 +7,8 @@ Pure Python — no LLM, no DB, no network. Runs in < 5ms.
 import math
 import pytest
 
-import src.retrieval.semantic_cache as cache_module
-from src.retrieval.semantic_cache import (
+import src.rag.semantic_cache as cache_module
+from src.rag.semantic_cache import (
     _cosine_similarity,
     cache_lookup,
     cache_store,

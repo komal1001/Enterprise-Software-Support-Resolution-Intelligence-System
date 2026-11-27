@@ -382,7 +382,8 @@ Together these cover: Max queries per user/minute + Query complexity limits + Pr
 - Placeholder agents raise `NotImplementedError("Agent X — Sprint Y")`
 - All agents accept and return `TicketState`
 - Pydantic BaseModel with `Literal` types for all structured LLM outputs
-- Parameterized SQL only — never build query strings from user input
+- Parameterized SQL only — never build query strings from user input (`cursor.execute` gets a fixed string literal; values go in `%s` params). Guarded by `tests/test_sql_construction.py`; the only allowed exception is `src/rag/sql.py::_execute`, which runs validated LLM SQL (ADR-002)
+- LLM-generated SQL defences, all tested: sqlglot validation (single SELECT, allow-listed tables, no dangerous functions like `pg_*`/`set_config`/`query_to_xml`/`dblink`, no `FOR UPDATE`) in `tests/test_sql_safety.py`; read-only role + read-only transactions + rollback-not-commit in `tests/test_db_least_privilege.py` / `tests/test_sql_construction.py`
 - Least privilege for DB connections: code that runs LLM-generated or user-influenced SQL must log in as `POSTGRES_READER_USER` (read-only), never the owner, and must fail closed if it is missing. Only fixed, hand-written queries may use `POSTGRES_USER`. Guarded by `tests/test_db_least_privilege.py`.
 - LLM credentials always from environment variables, never hardcoded
 - Create LLM/embedding clients only via `src/llm.py` (`chat_llm`, `CompatEmbedding`, `langchain_embeddings`)

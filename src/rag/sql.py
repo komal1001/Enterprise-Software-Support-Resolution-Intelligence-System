@@ -59,6 +59,7 @@ def _get_pool() -> psycopg2.pool.ThreadedConnectionPool:
                     user=user,
                     password=password,
                     sslmode="require",
+                    options="-c default_transaction_read_only=on",
                 )
     return _pool
 
@@ -181,12 +182,29 @@ def _generate(ticket_text: str, classification: dict, prompt_obj, validation_fee
 # Step 2 — SQL validation (sqlglot AST check)
 # ---------------------------------------------------------------------------
 
+# Functions a business query never needs but an attacker could use: server
+# file access, session/config changes (persist on pooled connections), sleeps
+# and locks (DoS), and functions that run SQL hidden inside a string
+# (query_to_xml('DELETE …') would bypass the AST check entirely).
+_BLOCKED_FUNCTION_PREFIXES = ("pg_", "lo_", "dblink")
+_BLOCKED_FUNCTIONS = frozenset({
+    "set_config", "query_to_xml", "query_to_xml_and_xmlschema", "query_to_xmlschema",
+    "cursor_to_xml", "cursor_to_xmlschema", "table_to_xml", "database_to_xml",
+    "schema_to_xml", "txid_current",
+})
+
+
+def _function_name(node: exp.Func) -> str:
+    return (node.name if isinstance(node, exp.Anonymous) else node.sql_name()).lower()
+
+
 def validate_sql(sql: str) -> tuple[bool, str]:
     """
-    Enforce three constraints before any query reaches the database:
+    Enforce these constraints before any query reaches the database:
       1. Must be a single SELECT statement (no DML)
       2. No DML nodes anywhere in the AST (catches DML inside subqueries)
       3. Only tables in ALLOWED_TABLES (CTE aliases excluded — they are virtual)
+      4. No dangerous functions (see _BLOCKED_FUNCTIONS) and no row locking
 
     Returns (is_valid, error_message).
     """
@@ -210,6 +228,14 @@ def validate_sql(sql: str) -> tuple[bool, str]:
     if disallowed:
         return False, f"Tables not in schema: {disallowed}"
 
+    for func in parsed.find_all(exp.Func):
+        name = _function_name(func)
+        if name in _BLOCKED_FUNCTIONS or name.startswith(_BLOCKED_FUNCTION_PREFIXES):
+            return False, f"Function not allowed: {name}"
+
+    if parsed.find(exp.Lock):
+        return False, "Row locking (FOR UPDATE/SHARE) not allowed"
+
     return True, ""
 
 
@@ -218,18 +244,18 @@ def validate_sql(sql: str) -> tuple[bool, str]:
 # ---------------------------------------------------------------------------
 
 def _execute(sql: str) -> dict:
-    # Uses a dedicated read-only DB user — SELECT only at the database level.
-    # This is the second layer of protection after sqlglot AST validation (defense in depth).
+    # Runs as the read-only DB role (see _reader_credentials) in read-only
+    # transactions — the database-level layers behind sqlglot validation.
     # SLO #12: Unauthorized Data Access = 0 violations.
-    # Setup: CREATE USER support_reader WITH PASSWORD '...';
-    #        GRANT SELECT ON ALL TABLES IN SCHEMA public TO support_reader;
     conn = _get_conn()
     try:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
             cur.execute("SET statement_timeout = '5s'")
             cur.execute(sql)
             rows = [dict(r) for r in cur.fetchall()]
-        conn.commit()
+        # Never commit: the query only reads, and rolling back undoes any session
+        # change it made, so one bad query can't poison this pooled connection.
+        conn.rollback()
         return {
             "rows":      rows,
             "row_count": len(rows),
